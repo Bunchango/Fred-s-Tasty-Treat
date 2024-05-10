@@ -22,5 +22,7 @@ public:
   static std::string readInput();
 
   static void printInvalidInput();
+
+  // Add helper function to read file
 };
 #endif
