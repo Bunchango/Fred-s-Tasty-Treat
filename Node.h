@@ -61,6 +61,8 @@ public:
  **/
 class Node {
 public:
+  // Assume that when we first create a Node, it doesn't hold any data, the
+  // LinkedList object is responsble for setting the data of the Node
   Node();
   ~Node();
   // pointer to the data held for the node

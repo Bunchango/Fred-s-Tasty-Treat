@@ -1,8 +1,13 @@
 #include "Node.h"
 
-Node::Node(){
-    // TODO
+Node::Node() {
+  // Create a new empty Node with data and next points to null
+  this->data = nullptr;
+  this->next = nullptr;
 };
-Node::~Node(){
-    // TODO
+Node::~Node() {
+  // Deallocate data in this node, but don't delete the next node
+  if (this->data != nullptr) {
+    delete this->data;
+  }
 };
