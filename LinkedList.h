@@ -7,7 +7,18 @@ public:
   LinkedList();
   ~LinkedList();
 
-  // more functions to be added perhaps...
+  // Add a new Node at the back
+  void append(Node *node);
+
+  // Remove a Node at an index
+  void remove(int index);
+
+  // Get a Node at in index
+  Node *get(int index);
+
+  // Utility methods
+  bool isEmpty();
+  int size();
 
 private:
   // the beginning of the list
