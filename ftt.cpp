@@ -7,10 +7,11 @@
  * Make sure free memory and close all files before exiting the program.
  **/
 int main(int argc, char **argv) {
-  /* validate command line arguments */
-  // TODO
-
-  std::cout << "Just a test, nothing implemented yet!" << std::endl;
+  // Get arguments
+  for (int i = 0; i < argc; i++) {
+    std::string strArgv(argv[i]);
+    std::cout << strArgv << "\n";
+  }
 
   return EXIT_SUCCESS;
 }

@@ -1,9 +1,22 @@
 #ifndef MACHINE_H
 #define MACHINE_H
+#include "LinkedList.h"
+#include "Register.h"
 #include <string>
+
+class Data {
+public:
+  std::string foodFile;
+  std::string moneyFile;
+
+  Data();
+};
 
 class Machine {
 private:
+  LinkedList *meals;
+  Register balance;
+  Data data;
   /*
    * Purchase a meal given an id
    */
@@ -31,7 +44,7 @@ private:
   void abort();
 
   /*
-   * Save all data to data files with FileLoader
+   * Save all data to data files
    */
   void save();
 
