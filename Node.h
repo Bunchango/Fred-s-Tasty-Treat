@@ -54,6 +54,10 @@ public:
 
   // how many of this food item do we have on hand?
   unsigned on_hand;
+
+  // For now, on_hand takes the default value
+  FoodItem(std::string id, std::string name, std::string description,
+           Price price);
 };
 
 /**

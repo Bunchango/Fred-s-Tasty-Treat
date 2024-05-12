@@ -1,6 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+#include "LinkedList.h"
 #include <cassert>
 #include <iostream>
 #include <random>
@@ -22,7 +23,5 @@ public:
   static std::string readInput();
 
   static void printInvalidInput();
-
-  // Add helper function to read file
 };
 #endif

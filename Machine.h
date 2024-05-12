@@ -1,22 +1,14 @@
 #ifndef MACHINE_H
 #define MACHINE_H
+#include "DataManager.h"
 #include "LinkedList.h"
 #include "Register.h"
 #include <string>
 
-class Data {
-public:
-  std::string foodFile;
-  std::string moneyFile;
-
-  Data();
-};
-
 class Machine {
 private:
-  LinkedList *meals;
-  Register balance;
-  Data data;
+  DataManager *data;
+
   /*
    * Purchase a meal given an id
    */
@@ -45,12 +37,13 @@ private:
 
   /*
    * Save all data to data files
+   * Return true if successfully saved data, false if otherwise
    */
-  void save();
+  bool save();
 
 public:
   // Initialize and destroy member variables
-  Machine();
+  Machine(std::string mealFile, std::string moneyFile);
   ~Machine();
 
   /*
