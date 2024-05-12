@@ -7,6 +7,7 @@
 
 class Machine {
 private:
+  // A pointer to an object to handle reading / saving / containing data
   DataManager *data;
 
   /*
