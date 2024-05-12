@@ -1,15 +1,16 @@
-#ifndef REGISTER_H
-#define REGISTER_H
+#ifndef BALANCE_H
+#define BALANCE_H
 #include "Coin.h"
+#include "Node.h"
 
 #include <vector>
-class Register {
+class Balance {
 public:
   // We only need a fixed size array of Coin as balance won't change size during
   // runtime
-  Coin balance[9];
+  Coin balance[NUM_DENOMS];
 
-  Register();
+  Balance();
 
   /*
    * Pay for an item with a denomination
@@ -28,7 +29,7 @@ public:
   /*
    * Add quantity to a denomination
    */
-  void addQuantity(Coin coin);
+  void insert(Coin coin);
 };
 
-#endif // REGISTER_H
+#endif // BALANCE_H

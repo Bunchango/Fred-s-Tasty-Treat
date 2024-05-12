@@ -43,6 +43,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
     Coin coin = Coin();
     coin.denom = Coin::intToDenomination(std::stoi(formatted[0]));
     coin.count = std::stoi(formatted[1]);
+    // Insert coins into Register
   }
 
   // Close the files

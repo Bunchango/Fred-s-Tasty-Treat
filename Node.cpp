@@ -6,7 +6,7 @@ FoodItem::FoodItem(std::string id, std::string name, std::string description,
   this->name = name;
   this->description = description;
   this->price = price;
-  this->on_hand = DEFAULT_COIN_COUNT;
+  this->on_hand = DEFAULT_FOOD_STOCK_LEVEL;
 }
 
 Node::Node() {

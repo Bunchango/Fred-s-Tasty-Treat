@@ -1,12 +1,12 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
+#include "Balance.h"
 #include "LinkedList.h"
-#include "Register.h"
 class DataManager {
 private:
   LinkedList *meals;
-  Register balance;
+  Balance balance;
   // Hold the name of the files so we can save it
   std::string mealFile;
   std::string moneyFile;

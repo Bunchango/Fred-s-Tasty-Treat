@@ -1,8 +1,8 @@
 #ifndef MACHINE_H
 #define MACHINE_H
+#include "Balance.h"
 #include "DataManager.h"
 #include "LinkedList.h"
-#include "Register.h"
 #include <string>
 
 class Machine {
