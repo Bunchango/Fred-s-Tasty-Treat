@@ -28,7 +28,7 @@ void LinkedList::append(Node *node) {
 
   // By now currentNode should be the last Node, so we add the next Node behind
   // it And we don't need to deallocate since the last node is a nullptr
-  currentNode->next = node;
+  currentNode = node;
 
   // Update count
   this->count++;
