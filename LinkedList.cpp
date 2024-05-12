@@ -51,14 +51,14 @@ Node *LinkedList::get(int index) {
 
   // Get the node at the given index
   // If the index is out of bound, get the last item of the LinkedList
-  while (currentNode != nullptr && current < index &&
-         current < (int)this->count) {
+  while (currentNode != nullptr && currentNode->next != nullptr &&
+         current < index && current < (int)this->count) {
     current++;
     currentNode = this->head->next;
   }
 
-  // By now, the nextNode should either be the last Node, or the Node at desired
-  // index
+  // By now, the nextNode should either be the last Node, which is not nullptr
+  // unless the LinkedList has a size of 0, or the Node at desired index
   return currentNode;
 }
 
