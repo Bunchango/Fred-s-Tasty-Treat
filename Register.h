@@ -12,11 +12,6 @@ public:
   Register();
 
   /*
-   * Formatted display of coins in balance
-   */
-  void displayBalance();
-
-  /*
    * Pay for an item with a denomination
    * Return the amount left after paying for the cost
    * If the denomination doesn't fully cover the cost then this method will
