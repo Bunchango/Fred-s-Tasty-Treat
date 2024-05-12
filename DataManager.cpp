@@ -51,3 +51,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
 }
 
 DataManager::~DataManager() { delete this->meals; }
+
+void DataManager::displayMeals() {}
+
+void DataManager::displayBalance() {}

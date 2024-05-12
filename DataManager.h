@@ -24,6 +24,16 @@ public:
    * Return true if successfully saved data, false if otherwise
    */
   void save();
+
+  /*
+   * Formatted display of food items in meals
+   */
+  void displayMeals();
+
+  /*
+   * Formatted display of coins in balance
+   */
+  void displayBalance();
 };
 
 #endif // !MANAGER_H

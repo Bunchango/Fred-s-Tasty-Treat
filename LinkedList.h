@@ -20,11 +20,6 @@ public:
   bool isEmpty();
   int size();
 
-  /*
-   * Formatted display of meals in the LinkedList
-   */
-  void display();
-
 private:
   // the beginning of the list
   Node *head;
