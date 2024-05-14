@@ -12,16 +12,23 @@
 
 class Helper {
 private:
-  Helper();
+    Helper();
 
 public:
-  static bool isNumber(std::string s);
+    static bool isNumber(std::string s);
 
-  static void splitString(std::string s, std::vector<std::string> &tokens,
-                          std::string delimeter);
+    static void splitString(std::string s, std::vector<std::string> &tokens,
+                            std::string delimeter);
 
-  static std::string readInput();
+    static std::string readInput();
 
-  static void printInvalidInput();
+    static void printInvalidInput();
+
+    /* Helper function to slit a floating number to its integer and fractional
+     * part Return a list of integers
+     */
+    static std::vector<int> splitFloat(float number);
+
+    static std::string floatToString(float number);
 };
 #endif
