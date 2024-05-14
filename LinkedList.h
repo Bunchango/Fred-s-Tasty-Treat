@@ -1,37 +1,40 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 #include "Node.h"
+#include <vector>
 
 class LinkedList {
 public:
-  LinkedList();
-  ~LinkedList();
+    LinkedList();
+    ~LinkedList();
 
-  // Add a new Node at the back
-  void append(Node *node);
+    // Add a new Node at the back
+    void append(Node *node);
 
-  void removeNode(Node *node);
-  void removeById(std::string id);
+    void remove(std::string id);
 
-  // Get Node
-  Node *getFirst();
-  Node *getById(std::string id);
+    // Get Node
+    Node *getFirst();
+    Node *getById(std::string id);
 
-  // Utility methods
-  bool isEmpty();
-  int size();
-  // Get the largest Id
-  int getLargestId();
+    // Utility methods
+    bool isEmpty();
+    int size();
+    // Get the largest Id of all the Nodes in the LinkedList
+    int getLargestIds();
 
-  // Sort by alphabetical order
-  void sortByAlpha();
+    // Get all prices
+    std::vector<float> getPrices();
+
+    // Sort the LinkedList by alphabetical order
+    void sortByAlpha();
 
 private:
-  // the beginning of the list
-  Node *head;
+    // the beginning of the list
+    Node *head;
 
-  // how many nodes are there in the list?
-  unsigned count;
+    // how many nodes are there in the list?
+    unsigned count;
 };
 
 #endif // LINKEDLIST_H
