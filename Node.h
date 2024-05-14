@@ -1,6 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 #include "Coin.h"
+#include <regex>
 #include <string>
 
 // The length of the id string not counting the nul terminator
@@ -12,8 +13,6 @@
 // The maximum length of a food item description not counting the nul
 // terminator.
 #define DESCLEN 255
-
-#define PRICELEN 9
 
 // The default coin level to reset the coins to on request
 #define DEFAULT_COIN_COUNT 20
@@ -40,6 +39,8 @@ public:
      * Get the value of Price object
      */
     float value();
+
+    int valueAsDenom();
 };
 
 /**
@@ -65,6 +66,8 @@ public:
     // For now, on_hand takes the default value
     FoodItem(std::string id, std::string name, std::string description,
              Price price);
+
+    bool static isValidIdFormat(const std::string &id);
 };
 
 /**
