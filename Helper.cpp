@@ -1,10 +1,11 @@
 #include "helper.h"
+#include "Helper.h"
 
-using std::string;
-using std::vector;
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <vector>
 
 Helper::Helper() {}
 
@@ -17,8 +18,8 @@ void Helper::printInvalidInput() {
 // not deduct marks in this case if you use this function, though
 // this is not ideal. Nevertheless, feel free to revise this
 // function to make it complied to style guide (this is optional).
-bool Helper::isNumber(string s) {
-    string::const_iterator it = s.begin();
+bool Helper::isNumber(std::string s) {
+    std::string::const_iterator it = s.begin();
     char dot = '.';
     int nb_dots = 0;
     while (it != s.end()) {
@@ -36,7 +37,8 @@ bool Helper::isNumber(string s) {
     return !s.empty() && s[0] != dot && it == s.end();
 }
 
-void Helper::splitString(string s, vector<string> &tokens, string delimeter) {
+void Helper::splitString(std::string s, std::vector<std::string> &tokens,
+                         std::string delimeter) {
     tokens.clear();
     char *_s = new char[s.length() + 1];
     strcpy(_s, s.c_str());
@@ -50,8 +52,8 @@ void Helper::splitString(string s, vector<string> &tokens, string delimeter) {
     delete[] _s;
 }
 
-string Helper::readInput() {
-    string input;
+std::string Helper::readInput() {
+    std::string input;
     std::getline(std::cin, input);
 
     std::cout << std::endl;
@@ -59,14 +61,54 @@ string Helper::readInput() {
     return input;
 }
 
-std::vector<int> Helper::splitFloat(float number) {
-    int integerPart = static_cast<int>(number);
-    int fractionalDigit = static_cast<int>((number - integerPart) * 10);
-    return {integerPart, fractionalDigit};
+std::string Helper::extractFirstTwoNumbers(const std::string &input) {
+    std::stringstream ss;
+    for (char c : input) {
+        if (isdigit(c)) {
+            ss << c;
+        } else {
+            break; // Stop when encountering non-digit characters
+        }
+    }
+    return ss.str();
 }
 
-std::string Helper::floatToString(float number) {
-    std::ostringstream streamObj;
-    streamObj << std::fixed << std::setprecision(2) << number;
-    return streamObj.str();
+std::string Helper::floatToString(float value) {
+    std::ostringstream oss;
+    value = static_cast<int>(value * 100) / 100.0; // Truncate to 2 decimal places
+    oss << std::fixed << std::setprecision(2) << value;
+    return oss.str();
+}
+
+int Helper::getLongestIntegerPart(std::vector<float> numbers) {
+    int longestInteger = 0;
+
+    for (float num : numbers) {
+        std::vector<std::string> splitted = {};
+        std::string numStr = floatToString(num);
+        Helper::splitString(numStr, splitted, ".");
+
+        if (splitted[0].size() > longestInteger) {
+            longestInteger = splitted[0].size();
+        }
+    }
+
+    return longestInteger;
+}
+
+std::string Helper::formatFloatToString(float number, int longestIntegerPart) {
+    std::string result = "";
+    std::vector<std::string> splitNumber = {};
+    splitString(floatToString(number), splitNumber, ".");
+
+    if (splitNumber[0].size() < longestIntegerPart) {
+        for (int i = 0; i < longestIntegerPart - splitNumber[0].size(); i++) {
+            result.append(" ");
+        }
+    }
+    result.append(splitNumber[0]);
+    result.append(".");
+    result.append(splitNumber[1]);
+
+    return result;
 }

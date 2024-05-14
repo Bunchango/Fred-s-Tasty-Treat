@@ -24,11 +24,14 @@ public:
 
     static void printInvalidInput();
 
-    /* Helper function to slit a floating number to its integer and fractional
-     * part Return a list of integers
-     */
-    static std::vector<int> splitFloat(float number);
+    static std::string formatFloatToString(float number, int longestIntegerPart);
 
     static std::string floatToString(float number);
+
+    // Get the longest integer part from a vector of floats
+    static int getLongestIntegerPart(std::vector<float> numbers);
+
+    // Get the first two character of a string
+    static std::string extractFirstTwoNumbers(const std::string &input);
 };
 #endif
