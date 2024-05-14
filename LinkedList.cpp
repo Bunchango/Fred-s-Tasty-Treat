@@ -1,4 +1,8 @@
 #include "LinkedList.h"
+#include "Node.h"
+#include <sstream>
+#include <string>
+#include <vector>
 
 LinkedList::LinkedList() {
     this->head = nullptr;
@@ -15,25 +19,55 @@ LinkedList::~LinkedList() {
 }
 
 void LinkedList::append(Node *node) {
-    if (!head) {
-        head = node;
+    if (!this->head) {
+        this->head = node;
     } else {
-        Node *currentNode = head;
-        while (currentNode->next) {
-            currentNode = currentNode->next;
+        Node *current = this->head;
+        while (current->next) {
+            current = current->next;
         }
-        currentNode->next = node;
+        current->next = node;
     }
     this->count++;
 }
 
 Node *LinkedList::getFirst() { return this->head; }
 
-Node *LinkedList::getById(std::string id) {}
+Node *LinkedList::getById(std::string id) {
+    Node *result = this->head;
+    while (head != nullptr) {
+        if (head->data->id == id) {
+            result = head;
+        }
+        result = result->next;
+    }
+    return result;
+}
 
-void LinkedList::removeNode(Node *node) {}
+void LinkedList::remove(std::string id) {
+    Node *current = this->head;
+    Node *previous = nullptr;
 
-void LinkedList::removeById(std::string id) {}
+    // Traverse the list to find the node that matches the ID
+    while (current != nullptr && current->data->id != id) {
+        previous = current;
+        current = current->next;
+    }
+
+    // If the node is found
+    if (current != nullptr) {
+        // If the node found is the head of the LinkedList
+        if (previous == nullptr) {
+            // Then set the next Node as the new head
+            head = current->next;
+        } else {
+            // If not, then redirect the pointer of the previous Node to skip a Node
+            previous->next = current->next;
+        }
+
+        delete current;
+    }
+}
 
 bool LinkedList::isEmpty() {
     bool result = false;
@@ -45,6 +79,60 @@ bool LinkedList::isEmpty() {
 
 int LinkedList::size() { return (int)this->count; }
 
-int LinkedList::getLargestId() {}
+int LinkedList::getLargestIds() {
+    int largestId = 0;
+    Node *current = this->head;
 
-void LinkedList::sortByAlpha() {}
+    // Traverse until the end of the LinkedList
+    while (current != nullptr) {
+        // Remove the first character F
+        std::string numberStr = this->head->data->id.substr(1);
+        // Convert the remaining to integer
+        int number;
+        std::istringstream(numberStr) >> number;
+
+        if (number > largestId) {
+            largestId = number;
+        }
+
+        current = current->next;
+    }
+
+    return largestId;
+}
+
+std::vector<float> LinkedList::getPrices() {
+    std::vector<float> prices = {};
+    Node *current = this->head;
+
+    while (current != nullptr) {
+        prices.push_back(current->data->price.value());
+        current = current->next;
+    }
+
+    return prices;
+}
+
+void LinkedList::sortByAlpha() {
+    if (this->head == nullptr || this->head->next == nullptr)
+        return; // No need to sort if list is empty or has only one element
+
+    bool swapped;
+    Node *ptr1;
+    Node *last = nullptr;
+
+    do {
+        swapped = false;
+        ptr1 = head;
+
+        while (ptr1->next != last) {
+            if (ptr1->data->name > ptr1->next->data->name) {
+                // Swap the data of ptr1 and ptr1->next
+                std::swap(ptr1->data, ptr1->next->data);
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        last = ptr1;
+    } while (swapped);
+}
