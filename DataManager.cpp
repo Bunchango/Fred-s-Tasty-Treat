@@ -121,7 +121,6 @@ void DataManager::displayMeals() {
         std::cout << Helper::formatFloatToString(currentMeal->data->price.value(),
                                                  longestInteger)
                   << "\n";
-        std::cout << currentMeal->data->price.value() << "\n";
         currentMeal = currentMeal->next;
     }
 }
