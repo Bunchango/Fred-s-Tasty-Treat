@@ -3,6 +3,17 @@
 
 #include "Balance.h"
 #include "LinkedList.h"
+
+#define EMPTY_SPACE " "
+#define SEPARATOR "|"
+#define SEPARATOR_NUM 2
+#define MONEY_SYMBOL "$"
+#define DENOM_LENGTH 7
+#define QUANTITY_LENGTH 9
+#define VALUE_LENGTH 7
+#define EXCESS_LINE 4
+#define LINE "-"
+
 class DataManager {
 private:
   LinkedList *meals;
