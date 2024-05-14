@@ -38,3 +38,23 @@ void Balance::insert(Coin newCoin) {
         }
     }
 }
+
+int Balance::getMaxValue() {
+    int maxValue = 0;
+    for (Coin coin : this->balance) {
+        if (coin.getTotal() > maxValue) {
+            maxValue = coin.getTotal();
+        }
+    }
+    return maxValue;
+}
+
+int Balance::getMaxQuantity() {
+    int maxQuantity = 0;
+    for (Coin coin : this->balance) {
+        if (coin.count > maxQuantity) {
+            maxQuantity = coin.count;
+        }
+    }
+    return maxQuantity;
+}
