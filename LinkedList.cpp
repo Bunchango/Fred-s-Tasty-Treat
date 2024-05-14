@@ -7,60 +7,27 @@ LinkedList::LinkedList() {
 
 LinkedList::~LinkedList() {
   // Delete all nodes to prevent memory leaks
-  Node *current = this->head;
-  while (current != nullptr) {
-    Node *next = current->next;
-    // Delete food item stored in the Node
-    delete next->data;
-    // Delete the node itself
-    delete next;
-    // Set the head to nullptr
-    this->head = nullptr;
+  while (head != nullptr) {
+    Node *temp = this->head;
+    this->head = this->head->next;
+    delete temp;
   }
 }
 
 void LinkedList::append(Node *node) {
-  Node *currentNode = this->head;
-  while (currentNode != nullptr) {
-    // If currentNode is not the last Node, then get the next Node
-    currentNode = currentNode->next;
+  if (!head) {
+    head = node;
+  } else {
+    Node *currentNode = head;
+    while (currentNode->next) {
+      currentNode = currentNode->next;
+    }
+    currentNode->next = node;
   }
-
-  // By now currentNode should be the last Node, so we add the next Node behind
-  // it And we don't need to deallocate since the last node is a nullptr
-  currentNode = node;
-
-  // Update count
   this->count++;
 }
 
-void LinkedList::remove(int index) {
-  // Get the previous node
-  Node *previousNode = this->get(index - 1);
-  // Get the Node after the next Node and delete the next Node
-  Node *nextNode = previousNode->next;
-  Node *newNextNode = nextNode->next;
-
-  delete nextNode; // Delete the next Node
-  previousNode->next = newNextNode;
-}
-
-Node *LinkedList::get(int index) {
-  int current = 0;
-  Node *currentNode = this->head;
-
-  // Get the node at the given index
-  // If the index is out of bound, get the last item of the LinkedList
-  while (currentNode != nullptr && currentNode->next != nullptr &&
-         current < index && current < (int)this->count) {
-    current++;
-    currentNode = this->head->next;
-  }
-
-  // By now, the nextNode should either be the last Node, which is not nullptr
-  // unless the LinkedList has a size of 0, or the Node at desired index
-  return currentNode;
-}
+Node *LinkedList::getFirst() { return this->head; }
 
 bool LinkedList::isEmpty() {
   bool result = false;

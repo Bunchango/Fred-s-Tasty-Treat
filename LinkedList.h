@@ -10,15 +10,21 @@ public:
   // Add a new Node at the back
   void append(Node *node);
 
-  // Remove a Node at an index
-  void remove(int index);
+  void removeNode(Node *node);
+  void removeById(std::string id);
 
-  // Get a Node at in index
-  Node *get(int index);
+  // Get Node
+  Node *getFirst();
+  Node *getById(std::string id);
 
   // Utility methods
   bool isEmpty();
   int size();
+  // Get the largest Id
+  int getLargestId();
+
+  // Sort by alphabetical order
+  void sort();
 
 private:
   // the beginning of the list
