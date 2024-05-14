@@ -24,7 +24,7 @@ public:
   int getLargestId();
 
   // Sort by alphabetical order
-  void sort();
+  void sortByAlpha();
 
 private:
   // the beginning of the list
