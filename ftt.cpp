@@ -1,4 +1,5 @@
 #include "LinkedList.h"
+#include "Machine.h"
 #include <iostream>
 #include <vector>
 
@@ -8,14 +9,17 @@
  * Make sure free memory and close all files before exiting the program.
  **/
 int main(int argc, char **argv) {
-  // Read arguments into an array of strings
-  // Use an array of size 6 as at most there will only be 6 arg strings
-  // (including EOF)
-  std::string strArgs[6];
-  for (int i = 0; i < argc; i++) {
-    std::string strArg(argv[i]);
-    strArgs[i] = strArg;
-  }
+    // Read arguments into an array of strings
+    // Use an array of size 6 as at most there will only be 6 arg strings
+    // (including EOF)
+    std::string strArgs[6];
+    for (int i = 0; i < argc; i++) {
+        std::string strArg(argv[i]);
+        strArgs[i] = strArg;
+    }
 
-  return EXIT_SUCCESS;
+    Machine *machine = new Machine(strArgs[1], strArgs[2]);
+
+    delete machine;
+    return EXIT_SUCCESS;
 }
