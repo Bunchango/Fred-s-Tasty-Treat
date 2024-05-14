@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+// TODO: Add validation for price: Only accept price that is can divide
+
 DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
     // Create an empty LinkedList and balance
     this->meals = new LinkedList();
