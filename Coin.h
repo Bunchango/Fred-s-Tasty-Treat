@@ -8,36 +8,41 @@
 // enumeration representing the various types of currency available in the
 // system.
 enum Denomination {
-  FIVE_CENTS,
-  TEN_CENTS,
-  TWENTY_CENTS,
-  FIFTY_CENTS,
-  ONE_DOLLAR,
-  TWO_DOLLARS,
-  FIVE_DOLLARS,
-  TEN_DOLLARS,
-  TWENTY_DOLLARS
+    FIVE_CENTS = 5,
+    TEN_CENTS = 10,
+    TWENTY_CENTS = 20,
+    FIFTY_CENTS = 50,
+    ONE_DOLLAR = 100,
+    TWO_DOLLARS = 200,
+    FIVE_DOLLARS = 500,
+    TEN_DOLLARS = 1000,
+    TWENTY_DOLLARS = 2000
 };
 
 // represents a coin type stored in the cash register perhaps. Each demonination
 // will have exactly one of these in the cash register.
 class Coin {
 public:
-  // the denomination type
-  enum Denomination denom;
+    // the denomination type
+    enum Denomination denom;
 
-  // the count of how many of these are in the cash register
-  unsigned count;
+    // the count of how many of these are in the cash register
+    unsigned count;
 
-  /*
-   * Check if inputed denomination is a valid denomination
-   */
-  bool static isDenomination(int denomination);
+    /*
+     * Check if inputed denomination is a valid denomination
+     */
+    bool static isDenomination(int denomination);
 
-  /*
-   * Return a Denomination enum corresponding to an int
-   */
-  Denomination static intToDenomination(int denomination_val);
+    /*
+     * Return a Denomination enum corresponding to an int
+     */
+    Denomination static intToDenomination(int denomination_val);
+
+    /*
+     * Get the total value of this Coin
+     */
+    float getTotal();
 };
 
 #endif // COIN_H
