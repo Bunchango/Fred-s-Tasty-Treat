@@ -13,6 +13,8 @@
 // terminator.
 #define DESCLEN 255
 
+#define PRICELEN 9
+
 // The default coin level to reset the coins to on request
 #define DEFAULT_COIN_COUNT 20
 
@@ -31,8 +33,13 @@
  **/
 class Price {
 public:
-  // The dollar value, and the cents value for some price
-  unsigned dollars, cents;
+    // The dollar value, and the cents value for some price
+    unsigned dollars, cents;
+
+    /*
+     * Get the value of Price object
+     */
+    float value();
 };
 
 /**
@@ -40,24 +47,24 @@ public:
  **/
 class FoodItem {
 public:
-  // the unique id for this food item
-  std::string id;
+    // the unique id for this food item
+    std::string id;
 
-  // the name of this food item
-  std::string name;
+    // the name of this food item
+    std::string name;
 
-  // the description of this food item
-  std::string description;
+    // the description of this food item
+    std::string description;
 
-  // the price of this food item
-  Price price;
+    // the price of this food item
+    Price price;
 
-  // how many of this food item do we have on hand?
-  unsigned on_hand;
+    // how many of this food item do we have on hand?
+    unsigned on_hand;
 
-  // For now, on_hand takes the default value
-  FoodItem(std::string id, std::string name, std::string description,
-           Price price);
+    // For now, on_hand takes the default value
+    FoodItem(std::string id, std::string name, std::string description,
+             Price price);
 };
 
 /**
@@ -65,14 +72,14 @@ public:
  **/
 class Node {
 public:
-  // Assume that when we first create a Node, it doesn't hold any data, the
-  // LinkedList object is responsble for setting the data of the Node
-  Node();
-  ~Node();
-  // pointer to the data held for the node
-  FoodItem *data;
-  // pointer to the next node in the list
-  Node *next;
+    // Assume that when we first create a Node, it doesn't hold any data, the
+    // LinkedList object is responsble for setting the data of the Node
+    Node();
+    ~Node();
+    // pointer to the data held for the node
+    FoodItem *data;
+    // pointer to the next node in the list
+    Node *next;
 };
 
 #endif // NODE_H
