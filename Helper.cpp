@@ -10,7 +10,7 @@
 Helper::Helper() {}
 
 void Helper::printInvalidInput() {
-    std::cout << "Invalid input.\n" << std::endl;
+  std::cout << "Invalid input.\n" << std::endl;
 }
 
 // This below function does not comply to our C++ Style Guide,
@@ -19,96 +19,85 @@ void Helper::printInvalidInput() {
 // this is not ideal. Nevertheless, feel free to revise this
 // function to make it complied to style guide (this is optional).
 bool Helper::isNumber(std::string s) {
-    std::string::const_iterator it = s.begin();
-    char dot = '.';
-    int nb_dots = 0;
-    while (it != s.end()) {
-        if (*it == dot) {
-            nb_dots++;
-            if (nb_dots > 1) {
-                break;
-            }
-        } else if (!isdigit(*it)) {
-            break;
-        }
-
-        ++it;
+  std::string::const_iterator it = s.begin();
+  char dot = '.';
+  int nb_dots = 0;
+  while (it != s.end()) {
+    if (*it == dot) {
+      nb_dots++;
+      if (nb_dots > 1) {
+        break;
+      }
+    } else if (!isdigit(*it)) {
+      break;
     }
-    return !s.empty() && s[0] != dot && it == s.end();
+
+    ++it;
+  }
+  return !s.empty() && s[0] != dot && it == s.end();
 }
 
 void Helper::splitString(std::string s, std::vector<std::string> &tokens,
                          std::string delimeter) {
-    tokens.clear();
-    char *_s = new char[s.length() + 1];
-    strcpy(_s, s.c_str());
+  tokens.clear();
+  char *_s = new char[s.length() + 1];
+  strcpy(_s, s.c_str());
 
-    char *pch;
-    pch = strtok(_s, delimeter.c_str());
-    while (pch != NULL) {
-        tokens.push_back(pch);
-        pch = strtok(NULL, delimeter.c_str());
-    }
-    delete[] _s;
+  char *pch;
+  pch = strtok(_s, delimeter.c_str());
+  while (pch != NULL) {
+    tokens.push_back(pch);
+    pch = strtok(NULL, delimeter.c_str());
+  }
+  delete[] _s;
 }
 
 std::string Helper::readInput() {
-    std::string input;
-    std::getline(std::cin, input);
+  std::string input;
+  std::getline(std::cin, input);
 
-    std::cout << std::endl;
+  std::cout << std::endl;
 
-    return input;
+  return input;
 }
 
-std::string Helper::extractFirstTwoNumbers(const std::string &input) {
-    std::stringstream ss;
-    for (char c : input) {
-        if (isdigit(c)) {
-            ss << c;
-        } else {
-            break; // Stop when encountering non-digit characters
-        }
-    }
-    return ss.str();
-}
-
-std::string Helper::floatToString(float value) {
-    std::ostringstream oss;
-    value = static_cast<int>(value * 100) / 100.0; // Truncate to 2 decimal places
-    oss << std::fixed << std::setprecision(2) << value;
-    return oss.str();
+std::string Helper::floatToString(float value, int precision) {
+  std::ostringstream oss;
+  oss << std::fixed << std::setprecision(precision) << value;
+  return oss.str();
 }
 
 int Helper::getLongestIntegerPart(std::vector<float> numbers) {
-    int longestInteger = 0;
+  int longestInteger = 0;
 
-    for (float num : numbers) {
-        std::vector<std::string> splitted = {};
-        std::string numStr = floatToString(num);
-        Helper::splitString(numStr, splitted, ".");
+  for (float num : numbers) {
+    std::vector<std::string> splitted = {};
+    std::string numStr = floatToString(num, 2);
+    Helper::splitString(numStr, splitted, ".");
 
-        if (splitted[0].size() > longestInteger) {
-            longestInteger = splitted[0].size();
-        }
+    if (splitted[0].size() > longestInteger) {
+      longestInteger = splitted[0].size();
     }
+  }
 
-    return longestInteger;
+  return longestInteger;
 }
 
 std::string Helper::formatFloatToString(float number, int longestIntegerPart) {
-    std::string result = "";
-    std::vector<std::string> splitNumber = {};
-    splitString(floatToString(number), splitNumber, ".");
+  std::string result = "";
+  std::vector<std::string> splitNumber = {};
+  splitString(floatToString(number, 2), splitNumber, ".");
 
-    if (splitNumber[0].size() < longestIntegerPart) {
-        for (int i = 0; i < longestIntegerPart - splitNumber[0].size(); i++) {
-            result.append(" ");
-        }
+  if (splitNumber[0].size() < longestIntegerPart) {
+    for (int i = 0; i < longestIntegerPart - splitNumber[0].size(); i++) {
+      result.append(" ");
     }
-    result.append(splitNumber[0]);
-    result.append(".");
-    result.append(splitNumber[1]);
+  }
+  result.append(splitNumber[0]);
+  result.append(".");
+  result.append(splitNumber[1]);
 
-    return result;
+  return result;
 }
+
+bool Helper::isInteger(float f) { return std::floor(f) == f; }
