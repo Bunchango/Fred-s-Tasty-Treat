@@ -12,26 +12,28 @@
 
 class Helper {
 private:
-    Helper();
+  Helper();
 
 public:
-    static bool isNumber(std::string s);
+  static bool isNumber(std::string s);
 
-    static void splitString(std::string s, std::vector<std::string> &tokens,
-                            std::string delimeter);
+  static void splitString(std::string s, std::vector<std::string> &tokens,
+                          std::string delimeter);
 
-    static std::string readInput();
+  static std::string readInput();
 
-    static void printInvalidInput();
+  static void printInvalidInput();
 
-    static std::string formatFloatToString(float number, int longestIntegerPart);
+  /*
+   * Check if a a number is a integer
+   */
+  static bool isInteger(float f);
 
-    static std::string floatToString(float number);
+  static std::string formatFloatToString(float number, int longestIntegerPart);
 
-    // Get the longest integer part from a vector of floats
-    static int getLongestIntegerPart(std::vector<float> numbers);
+  static std::string floatToString(float number, int precision);
 
-    // Get the first two character of a string
-    static std::string extractFirstTwoNumbers(const std::string &input);
+  // Get the longest integer part from a vector of floats
+  static int getLongestIntegerPart(std::vector<float> numbers);
 };
 #endif

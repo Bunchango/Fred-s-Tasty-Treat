@@ -32,15 +32,24 @@
  **/
 class Price {
 public:
-    // The dollar value, and the cents value for some price
-    unsigned dollars, cents;
+  // The dollar value, and the cents value for some price
+  unsigned dollars, cents;
 
-    /*
-     * Get the value of Price object
-     */
-    float value();
+  /*
+   * Get the value of Price object
+   */
+  float value();
 
-    int valueAsDenom();
+  /*
+   * Helper function to check get the value as denom value
+   */
+  int valueAsDenom();
+
+  /*
+   * Helper function to check if a price is is valid
+   * That is we can pay for the Item using the provided Denoms
+   */
+  static bool isValidPrice(float price);
 };
 
 /**
@@ -48,26 +57,26 @@ public:
  **/
 class FoodItem {
 public:
-    // the unique id for this food item
-    std::string id;
+  // the unique id for this food item
+  std::string id;
 
-    // the name of this food item
-    std::string name;
+  // the name of this food item
+  std::string name;
 
-    // the description of this food item
-    std::string description;
+  // the description of this food item
+  std::string description;
 
-    // the price of this food item
-    Price price;
+  // the price of this food item
+  Price price;
 
-    // how many of this food item do we have on hand?
-    unsigned on_hand;
+  // how many of this food item do we have on hand?
+  unsigned on_hand;
 
-    // For now, on_hand takes the default value
-    FoodItem(std::string id, std::string name, std::string description,
-             Price price);
+  // For now, on_hand takes the default value
+  FoodItem(std::string id, std::string name, std::string description,
+           Price price);
 
-    bool static isValidIdFormat(const std::string &id);
+  bool static isValidIdFormat(const std::string &id);
 };
 
 /**
@@ -75,14 +84,14 @@ public:
  **/
 class Node {
 public:
-    // Assume that when we first create a Node, it doesn't hold any data, the
-    // LinkedList object is responsble for setting the data of the Node
-    Node();
-    ~Node();
-    // pointer to the data held for the node
-    FoodItem *data;
-    // pointer to the next node in the list
-    Node *next;
+  // Assume that when we first create a Node, it doesn't hold any data, the
+  // LinkedList object is responsble for setting the data of the Node
+  Node();
+  ~Node();
+  // pointer to the data held for the node
+  FoodItem *data;
+  // pointer to the next node in the list
+  Node *next;
 };
 
 #endif // NODE_H
