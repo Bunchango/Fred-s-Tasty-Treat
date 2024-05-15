@@ -1,6 +1,5 @@
 #include "Node.h"
-
-#include "Helper.h"
+#include <cmath>
 #include <string>
 
 float Price::value() { return (float)dollars + (cents / 100.0f); }
@@ -8,7 +7,7 @@ float Price::value() { return (float)dollars + (cents / 100.0f); }
 int Price::valueAsDenom() { return this->value() * 100; }
 
 bool Price::isValidPrice(float price) {
-  return Helper::isInteger(price * 100 / 5);
+  return std::floor(price * 100 / 5) == (price * 100 / 5);
 }
 
 FoodItem::FoodItem(std::string id, std::string name, std::string description,
