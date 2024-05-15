@@ -53,7 +53,7 @@ public:
    * Imagine menu is the main while loop, while other methods in this class in
    * smaller while loops encompassed by this main loop
    */
-  void menu();
+  void start();
 };
 
 #endif // MACHINE_H

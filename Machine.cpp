@@ -12,4 +12,6 @@ Machine::~Machine() {
   delete this->data;
 }
 
-void Machine::menu() {}
+void Machine::start() {
+
+}
