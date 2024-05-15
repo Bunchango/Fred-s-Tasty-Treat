@@ -100,4 +100,15 @@ std::string Helper::formatFloatToString(float number, int longestIntegerPart) {
   return result;
 }
 
-bool Helper::isInteger(float f) { return std::floor(f) == f; }
+bool Helper::isValidInteger(std::string s) {
+  std::istringstream iss(s);
+  int num;
+  return (iss >> num) && iss.eof();
+}
+
+bool Helper::isValidFloat(std::string s) {
+  std::istringstream iss(s);
+  float num;
+  return isNumber(s) && (s.find(".") != std::string::npos) &&
+         ((iss >> num) && iss.eof());
+}

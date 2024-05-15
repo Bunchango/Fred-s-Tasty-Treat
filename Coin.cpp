@@ -1,10 +1,12 @@
 #include "Coin.h"
 
 // implement functions for managing coins; this may depend on your design.
-bool Coin::isDenomination(int denomination) {
-  return denomination == 5 || denomination == 10 || denomination == 20 ||
-         denomination == 50 || denomination == 100 || denomination == 200 ||
-         denomination == 500 || denomination == 1000 || denomination == 2000;
+bool Coin::isDenomination(std::string denomination) {
+  return denomination == "5" || denomination == "10" || denomination == "20" ||
+         denomination == "50" || denomination == "100" ||
+         denomination == "200" || denomination == "500" ||
+         denomination == "1000" || denomination == "2000" ||
+         denomination == "5000";
 }
 
 Denomination Coin::intToDenomination(int denomination_val) {
@@ -29,6 +31,8 @@ Denomination Coin::intToDenomination(int denomination_val) {
     denomination = TEN_DOLLARS;
   } else if (denomination_val == 2000) {
     denomination = TWENTY_DOLLARS;
+  } else if (denomination_val == 5000) {
+    denomination = FIFTY_DOLLARS;
   }
   return denomination;
 }

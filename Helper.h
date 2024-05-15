@@ -24,16 +24,18 @@ public:
 
   static void printInvalidInput();
 
-  /*
-   * Check if a a number is a integer
-   */
-  static bool isInteger(float f);
-
   static std::string formatFloatToString(float number, int longestIntegerPart);
 
   static std::string floatToString(float number, int precision);
 
   // Get the longest integer part from a vector of floats
   static int getLongestIntegerPart(std::vector<float> numbers);
+
+  // Check if a string can be converted to an integer
+  // For now, we don't accept a number that is too large because that can result
+  // in inaccurate numbers
+  static bool isValidInteger(std::string s);
+
+  static bool isValidFloat(std::string s);
 };
 #endif

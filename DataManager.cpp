@@ -28,6 +28,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
     if (tokens.size() == 4 && Helper::isNumber(tokens[3]) &&
         tokens[1].size() <= NAMELEN && tokens[2].size() <= DESCLEN &&
         FoodItem::isValidIdFormat(tokens[0]) &&
+        Helper::isValidFloat(tokens[3]) &&
         Price::isValidPrice(std::stof(tokens[3]))) {
       // Slit the price into its integer and fractional part to create Price
       // object
@@ -54,9 +55,8 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
     Helper::splitString(line, tokens, DELIM);
 
     if (tokens.size() == 2 && Helper::isNumber(tokens[0]) &&
-        Helper::isNumber(tokens[1]) &&
-        Coin::isDenomination(std::stoi(tokens[0])) &&
-        Helper::isInteger(std::stof(tokens[1]))) {
+        Helper::isNumber(tokens[1]) && Coin::isDenomination(tokens[0]) &&
+        Helper::isValidInteger(tokens[1])) {
       Coin coin = Coin();
       coin.denom = Coin::intToDenomination(std::stoi(tokens[0]));
       coin.count = std::stoi(tokens[1]);
