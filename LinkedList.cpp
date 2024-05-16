@@ -34,12 +34,14 @@ void LinkedList::append(Node *node) {
 Node *LinkedList::getFirst() { return this->head; }
 
 Node *LinkedList::getById(std::string id) {
-    Node *result = this->head;
-    while (head != nullptr) {
-        if (head->data->id == id) {
-            result = head;
+    Node *current = this->head;
+    Node* result = nullptr;
+    while (current!= nullptr) {
+        // Use.compare() to compare std::string objects
+        if (current->data->id.compare(id) == 0) { // Corrected line
+            result = current;
         }
-        result = result->next;
+        current = current->next;
     }
     return result;
 }

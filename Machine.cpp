@@ -30,9 +30,11 @@ void Machine::start() {
   if (input == "1") {
     this->data->displayMeals();
   } else if (input == "2") {
-    std::cout << "Purchase Meal\n"
-                 "-------------\n"
-                 "Please enter the ID of the food you wish to purchase: ";
+        std::cout << "Purchase Meal\n"
+                     "-------------\n";
+      std::cout << "Please enter the ID of the food you wish to purchase: ";
+      std::string input = Helper::readInput();
+      purchaseMeal(input);
   } else if (input == "3") {
     std::cout << "Save and exit";
   } else if (input == "4") {
@@ -46,4 +48,13 @@ void Machine::start() {
   } else {
     Helper::printInvalidInput();
   }
+}
+
+void Machine::purchaseMeal(std::string mealID) {
+    if (mealID == "F0001") {
+        std::cout << "You have selected ";
+        std::cout << this->data->meals->getById("F0001")->data->name;
+    } else {
+        Helper::printInvalidInput();
+    }
 }
