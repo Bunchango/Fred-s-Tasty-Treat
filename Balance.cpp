@@ -1,6 +1,5 @@
 #include "Balance.h"
 #include "Coin.h"
-#include <vector>
 
 Balance::Balance() {
   Denomination denoms[9] = {FIVE_CENTS,   TEN_CENTS,   TWENTY_CENTS,
@@ -15,8 +14,6 @@ Balance::Balance() {
     this->balance[i] = coin;
   }
 }
-
-int Balance::pay(int cost, int denomination) { return 0; }
 
 bool Balance::enoughDenomination(int denomination) {
   bool result = false;
