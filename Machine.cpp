@@ -14,39 +14,45 @@ Machine::~Machine() {
 }
 
 void Machine::start() {
-  std::cout << "Main Menu:\n"
-               "\t1. Display Meal Options\n"
-               "\t2. Purchase Meal\n"
-               "\t3. Save and Exit\n"
-               "Administrator-Only Menu:\n"
-               "\t4. Add Food\n"
-               "\t5. Remove Food\n"
-               "\t6. Display Balance\n"
-               "\t7. Abort Program\n"
-               "Select your option (1-7) : ";
-  std::string input = Helper::readInput();
-  std::cout << "\n";
+  bool run = true;
 
-  if (input == "1") {
-    this->displayMeals();
-  } else if (input == "2") {
-        std::cout << "Purchase Meal\n"
-                     "-------------\n";
-      std::cout << "Please enter the ID of the food you wish to purchase: ";
-      std::string input = Helper::readInput();
-      purchaseMeal(input);
-  } else if (input == "3") {
-    std::cout << "Save and exit";
-  } else if (input == "4") {
-    std::cout << "Add food";
-  } else if (input == "5") {
-    std::cout << "Remove food";
-  } else if (input == "6") {
-    this->displayBalance();
-  } else if (input == "7") {
-    std::cout << "Abort";
-  } else {
-    Helper::printInvalidInput();
+  while (run) {
+    std::cout << "Main Menu:\n"
+                "\t1. Display Meal Options\n"
+                "\t2. Purchase Meal\n"
+                "\t3. Save and Exit\n"
+                "Administrator-Only Menu:\n"
+                "\t4. Add Food\n"
+                "\t5. Remove Food\n"
+                "\t6. Display Balance\n"
+                "\t7. Abort Program\n"
+                "Select your option (1-7) : ";
+    std::string input = Helper::readInput();
+    std::cout << "\n";
+
+    if (input == "1") {
+      this->displayMeals();
+    } else if (input == "2") {
+          std::cout << "Purchase Meal\n"
+                      "-------------\n";
+        std::cout << "Please enter the ID of the food you wish to purchase: ";
+        std::string input = Helper::readInput();
+        purchaseMeal(input);
+    } else if (input == "3") {
+      std::cout << "Save and exit";
+    } else if (input == "4") {
+      std::cout << "Add food";
+    } else if (input == "5") {
+      std::cout << "Remove food";
+    } else if (input == "6") {
+      this->displayBalance();
+    } else if (input == "7") {
+      std::cout << "Abort";
+      run = false;
+    } else {
+      Helper::printInvalidInput();
+    }
+    std::cout << "\n";
   }
 }
 
