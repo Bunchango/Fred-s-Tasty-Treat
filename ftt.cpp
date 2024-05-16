@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     }
 
     Machine *machine = new Machine(strArgs[1], strArgs[2]);
-
+    machine->start();
     delete machine;
     return EXIT_SUCCESS;
 }
