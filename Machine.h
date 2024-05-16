@@ -32,6 +32,11 @@ private:
   void displayBalance();
 
   /*
+  * Formatted display all meals
+  */
+  void displayMeals();
+
+  /*
    * Terminate program, all progam data will be lost and freeup memory
    */
   void abort();
