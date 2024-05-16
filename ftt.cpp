@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
     std::string strArg(argv[i]);
     strArgs[i] = strArg;
   }
-
   // Redirect all outputs to a file if specified
   std::streambuf *coutbuf = std::cout.rdbuf(); // save old buf
   if (strArgs[4] != "") {

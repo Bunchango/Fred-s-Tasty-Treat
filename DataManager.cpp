@@ -68,11 +68,6 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   // Sort the LinkedList
   this->meals->sortByAlpha();
 
-  // Test
-  displayMeals();
-  std::cout << "\n";
-  displayBalance();
-
   // Close the files
   mealFile.close();
   moneyFile.close();
