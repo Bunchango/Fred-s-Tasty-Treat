@@ -75,8 +75,6 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
 
 DataManager::~DataManager() { delete this->meals; }
 
-// TODO: Look at edge case where the price of product has 3 decimal places
-
 void DataManager::displayMeals() {
   Node *currentMeal = this->meals->getFirst();
 
