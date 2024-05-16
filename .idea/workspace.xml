@@ -17,9 +17,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a1e1912d-35dd-4cf5-bdea-9afae8d8a1da" name="Changes" comment="implement balance">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/DataManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LinkedList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LinkedList.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Machine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Machine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ftt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ftt.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +110,8 @@
       <option name="presentableId" value="Default" />
       <updated>1715651868106</updated>
       <workItem from="1715651869408" duration="4021000" />
-      <workItem from="1715839117580" duration="1633000" />
+      <workItem from="1715839117580" duration="3600000" />
+      <workItem from="1715859266227" duration="1480000" />
     </task>
     <task id="LOCAL-00001" summary="implement balance">
       <option name="closed" value="true" />
