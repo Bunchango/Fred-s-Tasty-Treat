@@ -1,3 +1,4 @@
+#include "Helper.h"
 #include "LinkedList.h"
 #include "Machine.h"
 #include <fstream>
@@ -8,26 +9,28 @@
  * data, display the main menu, and handles the processing of options.
  * Make sure free memory and close all files before exiting the program.
  **/
+
 int main(int argc, char **argv) {
   // Read arguments into an array of strings
-  // Use an array of size 6 as at most there will only be 6 arg strings
-  // (including EOF)
   std::string strArgs[6];
   for (int i = 0; i < argc; i++) {
     std::string strArg(argv[i]);
     strArgs[i] = strArg;
   }
+
   // Redirect all outputs to a file if specified
   std::streambuf *coutbuf = std::cout.rdbuf(); // save old buf
+  std::ofstream outFile;
   if (strArgs[4] != "") {
-    std::ofstream outFile(strArgs[4]);
+    outFile.open(strArgs[4]);
     std::cout.rdbuf(outFile.rdbuf()); // redirect cout to file
   }
 
-  // Redirect all outputs to a file if specified
+  // Read all inputs from a file if specified
   std::streambuf *cinbuf = std::cin.rdbuf();
+  std::ifstream inFile;
   if (strArgs[3] != "") {
-    std::ifstream inFile(strArgs[3]);
+    inFile.open(strArgs[3]);
     std::cin.rdbuf(inFile.rdbuf());
   }
 
@@ -37,5 +40,14 @@ int main(int argc, char **argv) {
 
   // Reset to std output and input
   std::cout.rdbuf(coutbuf);
+
+  // Close file streams
+  if (outFile.is_open()) {
+    outFile.close();
+  }
+  if (inFile.is_open()) {
+    inFile.close();
+  }
+
   return EXIT_SUCCESS;
 }

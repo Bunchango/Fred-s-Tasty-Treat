@@ -1,6 +1,4 @@
 #include "helper.h"
-#include "Helper.h"
-
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -55,9 +53,6 @@ void Helper::splitString(std::string s, std::vector<std::string> &tokens,
 std::string Helper::readInput() {
   std::string input;
   std::getline(std::cin, input);
-
-  std::cout << std::endl;
-
   return input;
 }
 
