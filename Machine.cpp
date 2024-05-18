@@ -2,6 +2,7 @@
 #include "Coin.h"
 #include "DataManager.h"
 #include "Helper.h"
+#include "Node.h"
 #include "iostream"
 #include <string>
 #include <vector>
@@ -36,16 +37,14 @@ void Machine::start() {
     if (input == "1") {
       this->displayMeals();
     } else if (input == "2") {
-      std::cout << "Purchase Meal\n"
-                   "-------------\n";
-      std::cout << "Please enter the ID of the food you wish to purchase: ";
-      purchaseMeal();
+      this->purchaseMeal();
     } else if (input == "3") {
       std::cout << "Save and exit";
     } else if (input == "4") {
-      std::cout << "Add food";
+      this->addFood();
     } else if (input == "5") {
       std::cout << "Remove food";
+      this->removeFood();
     } else if (input == "6") {
       this->displayBalance();
     } else if (input == "7") {
@@ -60,32 +59,53 @@ void Machine::start() {
 }
 
 void Machine::purchaseMeal() {
-  std::string mealID = Helper::readInput();
+  std::cout << "Purchase Meal\n"
+               "-------------\n";
+  std::cout << "Please enter the ID of the food you wish to purchase: ";
+
   // Check if valid ID
   bool run = false;
-  Node *meal = this->data->meals->getById(mealID);
+  bool prompt = true;
+  Node *meal = nullptr;
   int priceAsCents = 0;
 
-  if (meal) {
-    run = true;
-    priceAsCents = meal->data->price.valueAsDenom();
-    std::cout << "You have selected \"" << meal->data->name << " - "
-              << meal->data->description << "\"" << ". This will cost you $ "
-              << (float)priceAsCents / 100 << " .";
-    std::cout << "Please hand over the money - type in the value of each "
-                 "note/coin in cents."
-              << "\n";
-    std::cout
-        << "Please enter ctrl-D or enter on a new line to cancel this purchase."
-        << "\n";
-  } else {
-    std::cout << "ID does not exist" << "\n";
-    std::cin.clear();
+  while (prompt) {
+    std::string mealID = Helper::readInput();
+    // Check if user wants to exit
+    if (std::cin.eof() || mealID.empty()) {
+      std::cout << "Cancle purchase" << "\n";
+      std::cin.clear(); // Clear the error flags
+      run = false;
+      prompt = false;
+    }
+
+    meal = this->data->meals->getById(mealID);
+
+    if (meal && meal->data->on_hand > 0 && prompt) {
+      run = true;
+      priceAsCents = meal->data->price.valueAsDenom();
+      std::cout << "You have selected \"" << meal->data->name << " - "
+                << meal->data->description << "\"" << ". This will cost you $ "
+                << (float)priceAsCents / 100 << " .";
+      std::cout << "Please hand over the money - type in the value of each "
+                   "note/coin in cents."
+                << "\n";
+      std::cout << "Please enter ctrl-D or enter on a new line to cancel this "
+                   "purchase."
+                << "\n";
+      prompt = false;
+    } else {
+      std::cout << "Item not found. Please check the food ID and try again"
+                << "\n";
+      std::cin.clear();
+    }
   }
 
   // Buying phase
   // Store all coins paid by the customer
   std::vector<Coin> payings = {};
+  // A bool representing that user fully paid for the item
+  bool reachedToRegister = false;
 
   while (run) {
     if (priceAsCents > 0) {
@@ -117,6 +137,7 @@ void Machine::purchaseMeal() {
     }
 
     if (priceAsCents <= 0) {
+      reachedToRegister = true;
       // Get the change
       std::cout << "Your change is ";
       int change = -priceAsCents; // Make it positive for easier handling
@@ -137,11 +158,15 @@ void Machine::purchaseMeal() {
         if (maxCoinPtr) {
           maxCoinPtr->count--;
           change -= maximumDenom;
+        } else {
+          std::cout << "Register doesn't have enough coins for change" << "\n";
+          run = false;
+          reachedToRegister = false; // Cancle pay
         }
         // Print the denomination
-        if (maximumDenom < 100) {
+        if (maximumDenom < 100 && maxCoinPtr) {
           std::cout << maximumDenom << "c ";
-        } else {
+        } else if (maximumDenom >= 100 && maxCoinPtr) {
           std::cout << "$" << maximumDenom / 100 << " ";
         }
 
@@ -150,12 +175,18 @@ void Machine::purchaseMeal() {
     }
   }
   // Add the coins from customer to the system
-  for (Coin coin : payings) {
-    this->data->balance->insert(coin);
+
+  if (reachedToRegister) {
+    for (Coin coin : payings) {
+      this->data->balance->insert(coin);
+    }
+    // Decrement the amount
+    meal->data->on_hand--;
   }
 }
 
 void Machine::displayMeals() {
+  this->data->meals->sortByAlpha();
   Node *currentMeal = this->data->meals->getFirst();
 
   // Display first row
@@ -255,3 +286,94 @@ void Machine::displayBalance() {
     std::cout << Helper::floatToString(coin.getTotal(), 2) << "\n";
   }
 }
+
+void Machine::addFood() {
+  std::string mealID = FoodItem::constructID(this->data->meals->getNextId());
+  std::string itemName = "";
+  std::string itemDesc = "";
+  std::string itemPrice = "";
+
+  // booleans to manage the flow
+  bool name = false;
+  bool desc = false;
+  bool price = false;
+  bool success = false;
+
+  if (mealID.size() == IDLEN) {
+    name = true;
+    std::cout << "This new meal item will have the Item ID of " << mealID
+              << ".\n";
+  }
+
+  while (name) {
+    std::cout << "Enter the item name: ";
+    itemName = Helper::readInput();
+    if (std::cin.eof()) {
+      std::cout << "Cancle add" << "\n";
+      std::cin.clear();
+      name = false;
+    }
+
+    if (name && itemName.size() > NAMELEN) {
+      std::cout << "Name too long." << "\n";
+    } else if (name && itemName.size() < NAMELEN) {
+      name = false;
+      desc = true;
+    }
+  }
+
+  while (desc) {
+    std::cout << "Enter the item description: ";
+    itemDesc = Helper::readInput();
+
+    if (std::cin.eof()) {
+      std::cout << "Cancle add" << "\n";
+      std::cin.clear();
+      desc = false;
+    }
+
+    if (desc && itemDesc.size() > DESCLEN) {
+      std::cout << "Description too long." << "\n";
+    } else if (desc && itemDesc.size() < DESCLEN) {
+      desc = false;
+      price = true;
+    }
+  }
+
+  while (price) {
+    std::cout << "Enter the price for this item (in cents): ";
+    itemPrice = Helper::readInput();
+
+    if (std::cin.eof()) {
+      std::cout << "Cancle add" << "\n";
+      std::cin.clear();
+      price = false;
+    }
+
+    if (price && !Price::isValidPrice(itemPrice)) {
+      std::cout << "Invalid price" << "\n";
+    } else if (price && Price::isValidPrice(itemPrice)) {
+      price = false;
+      success = true;
+    }
+  }
+
+  // Create FoodItem obj and assign it to LinkedList
+  if (success) {
+    std::vector<std::string> prices = {};
+    Helper::splitString(itemPrice, prices, ".");
+    Price price = Price();
+    price.dollars = std::stoi(prices[0]);
+    price.cents = std::stoi(prices[1]);
+
+    FoodItem *newMeal = new FoodItem(mealID, itemName, itemDesc, price);
+    Node *newNode = new Node();
+    newNode->data = newMeal;
+    this->data->meals->append(newNode);
+
+    std::cout << "This item \"" << itemName << " - " << itemDesc << "\""
+              << "has now been added to the food menu" << "\n";
+  }
+}
+
+void Machine::removeFood() {}
