@@ -13,7 +13,7 @@ private:
   /*
    * Purchase a meal given an id
    */
-  void purchaseMeal(std::string mealID);
+  void purchaseMeal();
 
   /*
    * Add a new food item to the associated LinkedList member variable
@@ -32,8 +32,8 @@ private:
   void displayBalance();
 
   /*
-  * Formatted display all meals
-  */
+   * Formatted display all meals
+   */
   void displayMeals();
 
   /*

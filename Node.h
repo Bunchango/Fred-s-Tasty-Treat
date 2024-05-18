@@ -49,7 +49,7 @@ public:
    * Helper function to check if a price is is valid
    * That is we can pay for the Item using the provided Denoms
    */
-  static bool isValidPrice(float price);
+  static bool isValidPrice(std::string price);
 };
 
 /**

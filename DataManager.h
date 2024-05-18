@@ -17,7 +17,6 @@
 
 class DataManager {
 private:
-
   // Hold the name of the files so we can save it
   std::string mealFile;
   std::string moneyFile;
@@ -28,7 +27,7 @@ public:
    * This method assumes mealFile and moneyFile are valid
    */
   LinkedList *meals;
-    Balance balance;
+  Balance *balance;
   DataManager(std::string mealFileName, std::string moneyFileName);
   ~DataManager();
 

@@ -4,19 +4,20 @@
 #include "LinkedList.h"
 #include "Node.h"
 #include <fstream>
-#include <iostream>
 #include <string>
 #include <vector>
 
 DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   // Create an empty LinkedList and balance
   this->meals = new LinkedList();
-  this->balance = Balance();
+  this->balance = new Balance();
 
   std::ifstream mealFile(mealFileName);
   std::ifstream moneyFile(moneyFileName);
 
-  // Read the meal file
+  // Read the files
+  // When assigning data from the read files, we need to check if the numbers
+  // are correct, that is it fits into floats and unsigned data
   std::string line;
   while (std::getline(mealFile, line)) {
     // Process each line: Create a new FoodItem, assign it to a Node, then add
@@ -25,11 +26,9 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
     std::vector<std::string> prices = {};
     Helper::splitString(line, tokens, "|");
 
-    if (tokens.size() == 4 && Helper::isNumber(tokens[3]) &&
-        tokens[1].size() <= NAMELEN && tokens[2].size() <= DESCLEN &&
-        FoodItem::isValidIdFormat(tokens[0]) &&
-        Helper::isValidFloat(tokens[3]) &&
-        Price::isValidPrice(std::stof(tokens[3]))) {
+    if (tokens.size() == 4 && tokens[1].size() <= NAMELEN &&
+        tokens[2].size() <= DESCLEN && FoodItem::isValidIdFormat(tokens[0]) &&
+        Helper::isValidFloat(tokens[3]) && Price::isValidPrice(tokens[3])) {
       // Slit the price into its integer and fractional part to create Price
       // object
       Helper::splitString(Helper::floatToString(std::stof(tokens[3]), 2),
@@ -61,7 +60,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
       coin.denom = Coin::intToDenomination(std::stoi(tokens[0]));
       coin.count = std::stoi(tokens[1]);
       // Insert coin to Balance
-      this->balance.insert(coin);
+      this->balance->insert(coin);
     }
   }
 
@@ -73,6 +72,9 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   moneyFile.close();
 }
 
-DataManager::~DataManager() { delete this->meals; }
+DataManager::~DataManager() {
+  delete this->meals;
+  delete this->balance;
+}
 
 void DataManager::save() {}
