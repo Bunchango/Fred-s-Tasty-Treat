@@ -28,7 +28,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
 
     if (tokens.size() == 4 && tokens[1].size() <= NAMELEN &&
         tokens[2].size() <= DESCLEN && FoodItem::isValidIdFormat(tokens[0]) &&
-        Helper::isValidFloat(tokens[3]) && Price::isValidPrice(tokens[3])) {
+        Price::isValidPrice(tokens[3])) {
       // Slit the price into its integer and fractional part to create Price
       // object
       Helper::splitString(Helper::floatToString(std::stof(tokens[3]), 2),
@@ -63,9 +63,6 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
       this->balance->insert(coin);
     }
   }
-
-  // Sort the LinkedList
-  this->meals->sortByAlpha();
 
   // Close the files
   mealFile.close();
