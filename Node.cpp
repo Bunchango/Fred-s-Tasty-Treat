@@ -1,13 +1,27 @@
 #include "Node.h"
-#include <cmath>
+#include "Helper.h"
+#include <regex>
 #include <string>
+#include <vector>
 
 float Price::value() { return (float)dollars + (cents / 100.0f); }
 
 int Price::valueAsDenom() { return this->value() * 100; }
 
-bool Price::isValidPrice(float price) {
-  return std::floor(price * 100 / 5) == (price * 100 / 5);
+bool Price::isValidPrice(std::string price) {
+  // A valid price is a price that is divisable by 5 after being multipled by
+  // 100
+  std::vector<std::string> tokens = {};
+  Helper::splitString(price, tokens, ".");
+  bool result = false;
+
+  std::regex pattern(".*[05]$");
+  if (tokens.size() == 2 && Helper::isNumber(price) && tokens[1].size() <= 2 &&
+      std::regex_match(tokens[1], pattern)) {
+    result = true;
+  }
+
+  return result;
 }
 
 FoodItem::FoodItem(std::string id, std::string name, std::string description,
