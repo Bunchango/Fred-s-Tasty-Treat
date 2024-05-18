@@ -5,36 +5,36 @@
 
 class LinkedList {
 public:
-    LinkedList();
-    ~LinkedList();
+  LinkedList();
+  ~LinkedList();
 
-    // Add a new Node at the back
-    void append(Node *node);
+  // Add a new Node at the back
+  void append(Node *node);
 
-    void remove(std::string id);
+  void remove(std::string id);
 
-    // Get Node
-    Node *getFirst();
-    Node *getById(std::string id);
+  // Get Node
+  Node *getFirst();
+  Node *getById(std::string id);
 
-    // Utility methods
-    bool isEmpty();
-    int size();
-    // Get the largest Id of all the Nodes in the LinkedList
-    int getLargestIds();
+  // Utility methods
+  bool isEmpty();
+  int size();
+  // Get the next Id of all the Nodes in the LinkedList
+  int getNextId();
 
-    // Get all prices
-    std::vector<float> getPrices();
+  // Get all prices
+  std::vector<float> getPrices();
 
-    // Sort the LinkedList by alphabetical order
-    void sortByAlpha();
+  // Sort the LinkedList by alphabetical order
+  void sortByAlpha();
 
 private:
-    // the beginning of the list
-    Node *head;
+  // the beginning of the list
+  Node *head;
 
-    // how many nodes are there in the list?
-    unsigned count;
+  // how many nodes are there in the list?
+  unsigned count;
 };
 
 #endif // LINKEDLIST_H
