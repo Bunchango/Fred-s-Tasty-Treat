@@ -76,7 +76,15 @@ public:
   FoodItem(std::string id, std::string name, std::string description,
            Price price);
 
+  /*
+   * Check if a string is in correct format
+   */
   bool static isValidIdFormat(const std::string &id);
+
+  /*
+   * Return a valid ID from an integer
+   */
+  std::string static constructID(int id);
 };
 
 /**
