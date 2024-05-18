@@ -1,8 +1,11 @@
 #include "Machine.h"
+#include "Coin.h"
 #include "DataManager.h"
 #include "Helper.h"
 #include "iostream"
 #include <string>
+#include <vector>
+
 Machine::Machine(std::string mealFileName, std::string moneyFileName) {
   DataManager *data = new DataManager(mealFileName, moneyFileName);
   this->data = data;
@@ -18,26 +21,25 @@ void Machine::start() {
 
   while (run) {
     std::cout << "Main Menu:\n"
-                "\t1. Display Meal Options\n"
-                "\t2. Purchase Meal\n"
-                "\t3. Save and Exit\n"
-                "Administrator-Only Menu:\n"
-                "\t4. Add Food\n"
-                "\t5. Remove Food\n"
-                "\t6. Display Balance\n"
-                "\t7. Abort Program\n"
-                "Select your option (1-7) : ";
+                 "\t1. Display Meal Options\n"
+                 "\t2. Purchase Meal\n"
+                 "\t3. Save and Exit\n"
+                 "Administrator-Only Menu:\n"
+                 "\t4. Add Food\n"
+                 "\t5. Remove Food\n"
+                 "\t6. Display Balance\n"
+                 "\t7. Abort Program\n"
+                 "Select your option (1-7) : ";
     std::string input = Helper::readInput();
     std::cout << "\n";
 
     if (input == "1") {
       this->displayMeals();
     } else if (input == "2") {
-          std::cout << "Purchase Meal\n"
-                      "-------------\n";
-        std::cout << "Please enter the ID of the food you wish to purchase: ";
-        std::string input = Helper::readInput();
-        purchaseMeal(input);
+      std::cout << "Purchase Meal\n"
+                   "-------------\n";
+      std::cout << "Please enter the ID of the food you wish to purchase: ";
+      purchaseMeal();
     } else if (input == "3") {
       std::cout << "Save and exit";
     } else if (input == "4") {
@@ -51,18 +53,106 @@ void Machine::start() {
       run = false;
     } else {
       Helper::printInvalidInput();
+      std::cin.clear();
     }
     std::cout << "\n";
   }
 }
 
-void Machine::purchaseMeal(std::string mealID) {
-    if (mealID == "F0001") {
-        std::cout << "You have selected ";
-        std::cout << this->data->meals->getById("F0001")->data->name;
-    } else {
-        Helper::printInvalidInput();
+void Machine::purchaseMeal() {
+  std::string mealID = Helper::readInput();
+  // Check if valid ID
+  bool run = false;
+  Node *meal = this->data->meals->getById(mealID);
+  int priceAsCents = 0;
+
+  if (meal) {
+    run = true;
+    priceAsCents = meal->data->price.valueAsDenom();
+    std::cout << "You have selected \"" << meal->data->name << " - "
+              << meal->data->description << "\"" << ". This will cost you $ "
+              << (float)priceAsCents / 100 << " .";
+    std::cout << "Please hand over the money - type in the value of each "
+                 "note/coin in cents."
+              << "\n";
+    std::cout
+        << "Please enter ctrl-D or enter on a new line to cancel this purchase."
+        << "\n";
+  } else {
+    std::cout << "ID does not exist" << "\n";
+    std::cin.clear();
+  }
+
+  // Buying phase
+  // Store all coins paid by the customer
+  std::vector<Coin> payings = {};
+
+  while (run) {
+    if (priceAsCents > 0) {
+      // If the user hasn't fully paid for the item
+      std::cout << "You still need to give us: $ " << (float)priceAsCents / 100
+                << ": ";
     }
+
+    std::string input = Helper::readInput();
+
+    // Check if user wants to exit
+    if (std::cin.eof() || input.empty()) {
+      std::cout << "Cancle purchase" << "\n";
+      std::cin.clear(); // Clear the error flags
+      run = false;
+    } else if (Coin::isDenomination(input)) {
+      int pay = std::stoi(input);
+      priceAsCents -= pay;
+
+      // Add new coins to the system, relook at this, only add after the user
+      // fully paid for the items
+      Coin newCoin = Coin();
+      newCoin.count = 1;
+      newCoin.denom = Coin::intToDenomination(std::stoi(input));
+      payings.push_back(newCoin);
+    } else {
+      std::cout << "Error: invalid denomination encountered" << "\n";
+      std::cin.clear();
+    }
+
+    if (priceAsCents <= 0) {
+      // Get the change
+      std::cout << "Your change is ";
+      int change = -priceAsCents; // Make it positive for easier handling
+      while (change > 0) {
+        int maximumDenom = 0;
+        Coin *maxCoinPtr = nullptr;
+
+        // Find the largest denomination coin that can be used for the change
+        for (Coin &coin : this->data->balance->balance) {
+          if (coin.count > 0 && coin.denom <= change &&
+              coin.denom > maximumDenom) {
+            maximumDenom = coin.denom;
+            maxCoinPtr = &coin;
+          }
+        }
+
+        // Decrement the coin count
+        if (maxCoinPtr) {
+          maxCoinPtr->count--;
+          change -= maximumDenom;
+        }
+        // Print the denomination
+        if (maximumDenom < 100) {
+          std::cout << maximumDenom << "c ";
+        } else {
+          std::cout << "$" << maximumDenom / 100 << " ";
+        }
+
+        run = false;
+      }
+    }
+  }
+  // Add the coins from customer to the system
+  for (Coin coin : payings) {
+    this->data->balance->insert(coin);
+  }
 }
 
 void Machine::displayMeals() {
@@ -76,7 +166,8 @@ void Machine::displayMeals() {
   }
 
   // Get the maximum size of PRICELEN
-  int longestInteger = Helper::getLongestIntegerPart(this->data->meals->getPrices());
+  int longestInteger =
+      Helper::getLongestIntegerPart(this->data->meals->getPrices());
   int pricelen = longestInteger + 3;
 
   std::cout << SEPARATOR << "Name";
@@ -110,9 +201,11 @@ void Machine::displayMeals() {
 }
 
 void Machine::displayBalance() {
-// Get maximum quantity and value length
-  int quantlen = Helper::floatToString(this->data->balance.getMaxValue(), 0).size();
-  int valuelen = Helper::floatToString(this->data->balance.getMaxValue(), 2).size();
+  // Get maximum quantity and value length
+  int quantlen =
+      Helper::floatToString(this->data->balance->getMaxValue(), 0).size();
+  int valuelen =
+      Helper::floatToString(this->data->balance->getMaxValue(), 2).size();
 
   if (quantlen < DEFAULT_QUANTITY_LENGTH) {
     quantlen = DEFAULT_QUANTITY_LENGTH;
@@ -143,7 +236,7 @@ void Machine::displayBalance() {
   }
   std::cout << "\n";
 
-  for (Coin coin : this->data->balance.balance) {
+  for (Coin coin : this->data->balance->balance) {
     std::cout << coin.denom;
     for (int i = 0; i < DENOM_LENGTH - std::to_string(coin.denom).size(); i++) {
       std::cout << EMPTY_SPACE;
