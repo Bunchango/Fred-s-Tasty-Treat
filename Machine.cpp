@@ -99,13 +99,7 @@ void Machine::purchaseMeal() {
                 << "\n";
       prompt = false;
     } else {
-<<<<<<< HEAD
       std::cout << "Item not found. Please check the food ID and try again: ";
-=======
-      // print out fail message when not found
-      std::cout << "Item not found. Please check the food ID and try again"
-                << "\n";
->>>>>>> e9d4937afd2bec1855b8ac40894d51e3bcf88227
       std::cin.clear();
     }
   }
