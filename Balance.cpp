@@ -81,3 +81,11 @@ Coin *Balance::getMaxDenomForValue(int value) {
   }
   return maxCoinPtr;
 }
+
+float Balance::getTotalValue() {
+  float total = 0.0;
+  for (Coin coin : this->balance) {
+    total += coin.getTotal();
+  }
+  return total;
+}

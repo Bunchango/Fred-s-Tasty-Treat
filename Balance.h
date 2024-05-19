@@ -41,6 +41,8 @@ public:
    * Get the maximum denom available to pay of a value
    */
   Coin *getMaxDenomForValue(int value);
+
+  float getTotalValue();
 };
 
 #endif // BALANCE_H

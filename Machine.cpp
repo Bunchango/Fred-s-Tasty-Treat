@@ -43,7 +43,7 @@ void Machine::start() {
     } else if (input == "4") {
       this->addFood();
     } else if (input == "5") {
-      std::cout << "Remove food";
+      std::cout << "Please enter the ID of the food to remove from the menu: ";
       this->removeFood();
     } else if (input == "6") {
       this->displayBalance();
@@ -59,7 +59,7 @@ void Machine::start() {
 }
 
 void Machine::purchaseMeal() {
-  //print out prompt
+  // print out prompt
   std::cout << "Purchase Meal\n"
                "-------------\n";
   std::cout << "Please enter the ID of the food you wish to purchase: ";
@@ -79,28 +79,31 @@ void Machine::purchaseMeal() {
       // terminate loop
       run = false;
       prompt = false;
-    }
-    // get the selected meal by ID
-    meal = this->data->meals->getById(mealID);
-    // check in-stock conditions
-    if (meal && meal->data->on_hand > 0 && prompt) {
-      run = true;
-      // denominate the price to cents
-      priceAsCents = meal->data->price.valueAsDenom();
-      // print out messages
-      std::cout << "You have selected \"" << meal->data->name << " - "
-                << meal->data->description << "\"" << ". This will cost you $ "
-                << (float)priceAsCents / 100 << " .";
-      std::cout << "Please hand over the money - type in the value of each "
-                   "note/coin in cents."
-                << "\n";
-      std::cout << "Please enter ctrl-D or enter on a new line to Cancel this "
-                   "purchase."
-                << "\n";
-      prompt = false;
     } else {
-      std::cout << "Item not found. Please check the food ID and try again: ";
-      std::cin.clear();
+      // get the selected meal by ID
+      meal = this->data->meals->getById(mealID);
+      // check in-stock conditions
+      if (meal && meal->data->on_hand > 0 && prompt) {
+        run = true;
+        // denominate the price to cents
+        priceAsCents = meal->data->price.valueAsDenom();
+        // print out messages
+        std::cout << "You have selected \"" << meal->data->name << " - "
+                  << meal->data->description << "\""
+                  << ". This will cost you $ " << (float)priceAsCents / 100
+                  << " .";
+        std::cout << "Please hand over the money - type in the value of each "
+                     "note/coin in cents."
+                  << "\n";
+        std::cout
+            << "Please enter ctrl-D or enter on a new line to Cancel this "
+               "purchase."
+            << "\n";
+        prompt = false;
+      } else {
+        std::cout << "Item not found. Please check the food ID and try again: ";
+        std::cin.clear();
+      }
     }
   }
 
@@ -178,8 +181,11 @@ void Machine::purchaseMeal() {
     reachedToRegister = true;
     // Get the change
 
-    while (priceAsCents < 0) {
+    if (priceAsCents < 0) {
       std::cout << "Your change is ";
+    }
+
+    while (priceAsCents < 0) {
       Coin *maxCoinPtr =
           this->data->balance->getMaxDenomForValue(-priceAsCents);
 
@@ -309,6 +315,25 @@ void Machine::displayBalance() {
     }
     std::cout << Helper::floatToString(coin.getTotal(), 2) << "\n";
   }
+
+  // Display separator line
+  for (int i = 0;
+       i < DENOM_LENGTH + quantlen + valuelen + SEPARATOR_NUM * 2 + 1; i++) {
+    std::cout << LINE;
+  }
+  std::cout << "\n";
+
+  // Display total value
+  for (int i = 0; i < DENOM_LENGTH + quantlen + SEPARATOR_NUM + 1; i++) {
+    std::cout << EMPTY_SPACE;
+  }
+  std::cout << MONEY_SYMBOL << EMPTY_SPACE;
+
+  float total = this->data->balance->getTotalValue();
+  for (int i = 0; i < valuelen - Helper::floatToString(total, 2).size(); i++) {
+    std::cout << EMPTY_SPACE;
+  }
+  std::cout << Helper::floatToString(total, 2) << "\n";
 }
 
 void Machine::addFood() {
