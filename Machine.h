@@ -43,9 +43,8 @@ private:
 
   /*
    * Save all data to data files
-   * Return true if successfully saved data, false if otherwise
    */
-  bool save();
+  void save();
 
 public:
   // Initialize and destroy member variables

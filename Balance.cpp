@@ -56,3 +56,28 @@ int Balance::getMaxQuantity() {
   }
   return maxQuantity;
 }
+
+Coin *Balance::getDenom(int denom) {
+  Coin *coinPtr = nullptr;
+
+  for (Coin &coin : this->balance) {
+    if (coin.denom == denom) {
+      coinPtr = &coin;
+    }
+  }
+  return coinPtr;
+}
+
+Coin *Balance::getMaxDenomForValue(int value) {
+  int maximumDenom = 0;
+  Coin *maxCoinPtr = nullptr;
+
+  // Find the largest denomination coin that can be used for the change
+  for (Coin &coin : this->balance) {
+    if (coin.count > 0 && coin.denom <= value && coin.denom > maximumDenom) {
+      maximumDenom = coin.denom;
+      maxCoinPtr = &coin;
+    }
+  }
+  return maxCoinPtr;
+}

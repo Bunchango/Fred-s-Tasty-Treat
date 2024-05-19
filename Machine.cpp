@@ -95,8 +95,7 @@ void Machine::purchaseMeal() {
                 << "\n";
       prompt = false;
     } else {
-      std::cout << "Item not found. Please check the food ID and try again"
-                << "\n";
+      std::cout << "Item not found. Please check the food ID and try again: ";
       std::cin.clear();
     }
   }
@@ -120,66 +119,87 @@ void Machine::purchaseMeal() {
     if (std::cin.eof() || input.empty()) {
       std::cout << "Cancle purchase" << "\n";
       std::cin.clear(); // Clear the error flags
+
+      // When exit, remove the coins from the system
+      for (Coin newCoin : payings) {
+        for (Coin &coin : this->data->balance->balance) {
+          if (coin.denom == newCoin.denom) {
+            coin.count -= newCoin.count;
+          }
+        }
+      }
+
       run = false;
     } else if (Coin::isDenomination(input)) {
       int pay = std::stoi(input);
       priceAsCents -= pay;
 
-      // Add new coins to the system, relook at this, only add after the user
-      // fully paid for the items
+      // Add new coins to the system
       Coin newCoin = Coin();
       newCoin.count = 1;
       newCoin.denom = Coin::intToDenomination(std::stoi(input));
+      // Keep track of newly added coins so that when user cancle purchase, we
+      // can remove them
       payings.push_back(newCoin);
+      this->data->balance->insert(newCoin);
+
+      // Check if the register can afford to pay for the change
+      int change = priceAsCents;
+      bool canReturnChange = true;
+
+      while (change < 0 && canReturnChange) {
+        Coin *coin = this->data->balance->getMaxDenomForValue(-change);
+        if (!coin) {
+          canReturnChange = false;
+        } else {
+          change += coin->denom;
+        }
+      }
+
+      if (!canReturnChange) {
+        // Force the user to pay for the item again and remove the previous
+        // paid Coin from the system
+        priceAsCents += payings.back().denom;
+        this->data->balance->getDenom(payings.back().denom)->count--;
+
+        std::cout << "The register doesn't have enough coins for change. "
+                     "Please try a different denom"
+                  << "\n";
+      }
     } else {
       std::cout << "Error: invalid denomination encountered" << "\n";
       std::cin.clear();
     }
 
-    if (priceAsCents <= 0) {
-      reachedToRegister = true;
-      // Get the change
+    reachedToRegister = true;
+    // Get the change
+
+    while (priceAsCents < 0) {
       std::cout << "Your change is ";
-      int change = -priceAsCents; // Make it positive for easier handling
-      while (change > 0) {
-        int maximumDenom = 0;
-        Coin *maxCoinPtr = nullptr;
+      Coin *maxCoinPtr =
+          this->data->balance->getMaxDenomForValue(-priceAsCents);
 
-        // Find the largest denomination coin that can be used for the change
-        for (Coin &coin : this->data->balance->balance) {
-          if (coin.count > 0 && coin.denom <= change &&
-              coin.denom > maximumDenom) {
-            maximumDenom = coin.denom;
-            maxCoinPtr = &coin;
-          }
-        }
+      // Decrement the coin count
+      if (maxCoinPtr) {
+        maxCoinPtr->count--;
+        priceAsCents += maxCoinPtr->denom;
+      }
 
-        // Decrement the coin count
-        if (maxCoinPtr) {
-          maxCoinPtr->count--;
-          change -= maximumDenom;
-        } else {
-          std::cout << "Register doesn't have enough coins for change" << "\n";
-          run = false;
-          reachedToRegister = false; // Cancle pay
-        }
-        // Print the denomination
-        if (maximumDenom < 100 && maxCoinPtr) {
-          std::cout << maximumDenom << "c ";
-        } else if (maximumDenom >= 100 && maxCoinPtr) {
-          std::cout << "$" << maximumDenom / 100 << " ";
-        }
-
-        run = false;
+      // Print the denomination
+      if (maxCoinPtr && maxCoinPtr->denom < 100) {
+        std::cout << maxCoinPtr->denom << "c ";
+      } else if (maxCoinPtr && maxCoinPtr->denom >= 100) {
+        std::cout << "$" << maxCoinPtr->denom / 100 << " ";
       }
     }
-  }
-  // Add the coins from customer to the system
 
-  if (reachedToRegister) {
-    for (Coin coin : payings) {
-      this->data->balance->insert(coin);
+    // Exit out of the while loop once the system fully paid for the change
+    if (priceAsCents == 0) {
+      run = false;
     }
+  }
+  // If reached to the end, remove the number of item by 1
+  if (reachedToRegister) {
     // Decrement the amount
     meal->data->on_hand--;
   }
@@ -376,4 +396,16 @@ void Machine::addFood() {
   }
 }
 
-void Machine::removeFood() {}
+void Machine::removeFood() {
+  std::string input = Helper::readInput();
+  Node *meal = this->data->meals->getById(input);
+
+  if (meal) {
+    std::cout << "\"" << meal->data->id << " - " << meal->data->name << " - "
+              << meal->data->description << "\""
+              << "has been removed from the system" << "\n";
+    this->data->meals->remove(input);
+  }
+}
+
+void Machine::save() {}

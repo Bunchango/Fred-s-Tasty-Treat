@@ -31,6 +31,16 @@ public:
    * Get the maximum value of all denomination
    */
   float getMaxValue();
+
+  /*
+   * Get the Coin corressponding with a denom enum
+   */
+  Coin *getDenom(int denom);
+
+  /*
+   * Get the maximum denom available to pay of a value
+   */
+  Coin *getMaxDenomForValue(int value);
 };
 
 #endif // BALANCE_H
