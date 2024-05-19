@@ -1,13 +1,14 @@
 #ifndef BALANCE_H
 #define BALANCE_H
 #include "Coin.h"
+#include "Node.h"
 
 #include <vector>
 class Balance {
 public:
   // We only need a fixed size array of Coin as balance won't change size during
   // runtime
-  Coin balance[9];
+  Coin balance[NUM_DENOMS];
 
   Balance();
 

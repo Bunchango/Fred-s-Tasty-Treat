@@ -1,12 +1,13 @@
 #include "Balance.h"
 #include "Coin.h"
+#include "Node.h"
 
 Balance::Balance() {
-  Denomination denoms[9] = {FIVE_CENTS,   TEN_CENTS,   TWENTY_CENTS,
-                            FIFTY_CENTS,  ONE_DOLLAR,  TWO_DOLLARS,
-                            FIVE_DOLLARS, TEN_DOLLARS, TWENTY_DOLLARS};
+  Denomination denoms[NUM_DENOMS] = {
+      FIVE_CENTS,  TEN_CENTS,    TWENTY_CENTS, FIFTY_CENTS,    ONE_DOLLAR,
+      TWO_DOLLARS, FIVE_DOLLARS, TEN_DOLLARS,  TWENTY_DOLLARS, FIFTY_DOLLARS};
   // Create a default balance with no money
-  for (int i = 0; i < 9; i++) {
+  for (int i = 0; i < NUM_DENOMS; i++) {
     // Create Coin representing each denomination
     Coin coin = Coin();
     coin.count = 0;

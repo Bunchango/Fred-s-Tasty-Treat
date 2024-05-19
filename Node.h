@@ -22,7 +22,7 @@
 #define DEFAULT_FOOD_STOCK_LEVEL 20
 
 // The number of denominations of currency available in the system
-#define NUM_DENOMS 8
+#define NUM_DENOMS 10
 
 /**
  * a structure to represent a price. One of the problems with the floating
