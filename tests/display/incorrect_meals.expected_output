@@ -1,0 +1,64 @@
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) : 
+
+ID   |Name                                    |Length
+-------------------------------------------------------
+F0006|Fondue                                  |$31.50
+F0007|Kelewele                                |$11.50
+
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) : 
+
+Purchase Meal
+-------------
+Please enter the ID of the food you wish to purchase: 
+Item not found. Please check the food ID and try again: 
+You have selected "Fondue - European dish of assorted melted cheeses. Served with bread for dipping". This will cost you $ 31.5 .Please hand over the money - type in the value of each note/coin in cents.
+Please enter ctrl-D or enter on a new line to Cancel this purchase.
+You still need to give us: $ 31.5: 2000
+You still need to give us: $ 11.5: 1000
+You still need to give us: $ 1.5: 100
+You still need to give us: $ 0.5: 50
+
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) : 
+
+ID   |Name                                    |Length
+-------------------------------------------------------
+F0006|Fondue                                  |$31.50
+F0007|Kelewele                                |$11.50
+
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) : 
