@@ -27,8 +27,9 @@
 /**
  * a structure to represent a price. One of the problems with the floating
  * point formats in C++ like float and double is that they have minor issues
- * of inaccuracy due to rounding. In the case of currency this really is
- * not acceptable so we introduce our own type to keep track of currency.
+ * of inaccuracy due to rounding. In itemName.find('|') != std::string::nposthe
+ *case of currency this really is not acceptable so we introduce our own type to
+ *keep track of currency.
  **/
 class Price {
 public:
@@ -85,6 +86,10 @@ public:
    * Return a valid ID from an integer
    */
   std::string static constructID(int id);
+
+  bool static isValidName(const std::string &name);
+
+  bool static isValidDesc(const std::string &desc);
 };
 
 /**

@@ -51,7 +51,7 @@ float Balance::getMaxValue() {
 int Balance::getMaxQuantity() {
   int maxQuantity = 0;
   for (Coin coin : this->balance) {
-    if (coin.count > maxQuantity) {
+    if ((int)coin.count > maxQuantity) {
       maxQuantity = coin.count;
     }
   }

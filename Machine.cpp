@@ -250,7 +250,7 @@ void Machine::displayMeals() {
 
   while (currentMeal != nullptr) {
     std::cout << currentMeal->data->id << SEPARATOR << currentMeal->data->name;
-    for (int i = 0; i < NAMELEN - currentMeal->data->name.size(); i++) {
+    for (int i = 0; i < NAMELEN - (int)currentMeal->data->name.size(); i++) {
       std::cout << EMPTY_SPACE;
     }
     std::cout << SEPARATOR << MONEY_SYMBOL;
@@ -301,18 +301,21 @@ void Machine::displayBalance() {
 
   for (Coin coin : this->data->balance->balance) {
     std::cout << coin.denom;
-    for (int i = 0; i < DENOM_LENGTH - std::to_string(coin.denom).size(); i++) {
+    for (int i = 0; i < DENOM_LENGTH - (int)std::to_string(coin.denom).size();
+         i++) {
       std::cout << EMPTY_SPACE;
     }
     std::cout << SEPARATOR << EMPTY_SPACE << coin.count;
 
-    for (int i = 0; i < quantlen - std::to_string(coin.count).size(); i++) {
+    for (int i = 0; i < quantlen - (int)std::to_string(coin.count).size();
+         i++) {
       std::cout << EMPTY_SPACE;
     }
     std::cout << SEPARATOR << MONEY_SYMBOL << EMPTY_SPACE;
 
     for (int i = 0;
-         i < valuelen - Helper::floatToString(coin.getTotal(), 2).size(); i++) {
+         i < valuelen - (int)Helper::floatToString(coin.getTotal(), 2).size();
+         i++) {
       std::cout << EMPTY_SPACE;
     }
     std::cout << Helper::floatToString(coin.getTotal(), 2) << "\n";
@@ -334,7 +337,8 @@ void Machine::displayBalance() {
   std::cout << MONEY_SYMBOL << EMPTY_SPACE;
 
   float total = this->data->balance->getTotalValue();
-  for (int i = 0; i < valuelen - Helper::floatToString(total, 2).size(); i++) {
+  for (int i = 0; i < valuelen - (int)Helper::floatToString(total, 2).size();
+       i++) {
     std::cout << EMPTY_SPACE;
   }
   std::cout << Helper::floatToString(total, 2) << "\n";
@@ -367,9 +371,9 @@ void Machine::addFood() {
       name = false;
     }
 
-    if (name && itemName.size() > NAMELEN) {
-      std::cout << "Name too long." << "\n";
-    } else if (name && itemName.size() < NAMELEN) {
+    if (name && !FoodItem::isValidName(itemName)) {
+      std::cout << "Invalid name" << "\n";
+    } else if (name && FoodItem::isValidName(itemName)) {
       name = false;
       desc = true;
     }
@@ -385,9 +389,9 @@ void Machine::addFood() {
       desc = false;
     }
 
-    if (desc && itemDesc.size() > DESCLEN) {
-      std::cout << "Description too long." << "\n";
-    } else if (desc && itemDesc.size() < DESCLEN) {
+    if (desc && !FoodItem::isValidDesc(itemDesc)) {
+      std::cout << "Invalid description" << "\n";
+    } else if (desc && FoodItem::isValidDesc(itemDesc)) {
       desc = false;
       price = true;
     }
