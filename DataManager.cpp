@@ -84,15 +84,15 @@ void DataManager::save() {
   std::string line;
   Node* current = this->meals->getFirst();
   while (current) {
-    mealFile << current->data->id << "|" << current->data->name 
-    << "|" << current->data->description << "|" 
+    mealFile << current->data->id << SEPARATOR << current->data->name 
+    << "|" << current->data->description << SEPARATOR 
     << Helper::floatToString(current->data->price.value(), 2) << "\n";
-    
+
     current = current->next;
   }
 
   for (Coin coin: this->balance->balance) {
-    coinFile << coin.denom << "|" << coin.count << "\n";
+    coinFile << coin.denom << DELIM << coin.count << "\n";
   } 
 
   mealFile.close();
