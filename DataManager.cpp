@@ -11,6 +11,9 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   // Create an empty LinkedList and balance
   this->meals = new LinkedList();
   this->balance = new Balance();
+  
+  this->mealFile = mealFileName;
+  this->moneyFile = moneyFileName;
 
   std::ifstream mealFile(mealFileName);
   std::ifstream moneyFile(moneyFileName);
@@ -68,6 +71,33 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   mealFile.close();
   moneyFile.close();
 }
+// Save the file 
+void DataManager::save() {
+  std::ofstream mealFile(this->mealFile);
+  std::ofstream coinFile(this->moneyFile);
+
+  if (!mealFile.is_open()) {
+      std::cerr << "Failed to open file: " << this->mealFile << std::endl;
+      return;
+  }
+
+  std::string line;
+  Node* current = this->meals->getFirst();
+  while (current) {
+    mealFile << current->data->id << "|" << current->data->name 
+    << "|" << current->data->description << "|" 
+    << Helper::floatToString(current->data->price.value(), 2) << "\n";
+    
+    current = current->next;
+  }
+
+  for (Coin coin: this->balance->balance) {
+    coinFile << coin.denom << "|" << coin.count << "\n";
+  } 
+
+  mealFile.close();
+  coinFile.close();
+};
 
 DataManager::~DataManager() {
   delete this->meals;

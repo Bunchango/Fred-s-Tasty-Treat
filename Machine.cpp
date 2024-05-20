@@ -39,7 +39,8 @@ void Machine::start() {
     } else if (input == "2") {
       this->purchaseMeal();
     } else if (input == "3") {
-      std::cout << "Save and exit";
+      this->data->save();
+      run = false;
     } else if (input == "4") {
       this->addFood();
     } else if (input == "5") {
@@ -48,7 +49,6 @@ void Machine::start() {
     } else if (input == "6") {
       this->displayBalance();
     } else if (input == "7") {
-      std::cout << "Abort";
       run = false;
     } else {
       Helper::printInvalidInput();
