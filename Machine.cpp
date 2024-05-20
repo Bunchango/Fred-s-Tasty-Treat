@@ -178,11 +178,9 @@ void Machine::purchaseMeal() {
       std::cin.clear();
     }
 
-    reachedToRegister = true;
-    // Get the change
-
     if (priceAsCents < 0) {
       std::cout << "Your change is ";
+      reachedToRegister = true;
     }
 
     while (priceAsCents < 0) {
