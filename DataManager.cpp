@@ -73,5 +73,3 @@ DataManager::~DataManager() {
   delete this->meals;
   delete this->balance;
 }
-
-void DataManager::save() {}
