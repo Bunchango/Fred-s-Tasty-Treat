@@ -108,7 +108,8 @@ void Machine::purchaseMeal() {
   }
 
   // Buying phase
-  // Store all coins paid by the customer
+  // Store all coins paid by the customer so we can delete they later if the
+  // customer decides to exit
   std::vector<Coin> payings = {};
   // A bool representing that user fully paid for the item
   bool reachedToRegister = false;
@@ -290,7 +291,8 @@ void Machine::displayBalance() {
 
   // Display separator line
   for (int i = 0;
-       i < DENOM_LENGTH + quantlen + valuelen + SEPARATOR_NUM * 2 + 1; i++) {
+       i < DENOM_LENGTH + quantlen + valuelen + SEPARATOR_NUM + EXCESS_LINE;
+       i++) {
     std::cout << LINE;
   }
   std::cout << "\n";
@@ -316,12 +318,14 @@ void Machine::displayBalance() {
 
   // Display separator line
   for (int i = 0;
-       i < DENOM_LENGTH + quantlen + valuelen + SEPARATOR_NUM * 2 + 1; i++) {
+       i < DENOM_LENGTH + quantlen + valuelen + SEPARATOR_NUM + EXCESS_LINE;
+       i++) {
     std::cout << LINE;
   }
   std::cout << "\n";
 
   // Display total value
+  // The additional 1 is accounting for the extra EMPTY_SPACE
   for (int i = 0; i < DENOM_LENGTH + quantlen + SEPARATOR_NUM + 1; i++) {
     std::cout << EMPTY_SPACE;
   }
@@ -425,13 +429,19 @@ void Machine::addFood() {
 
 void Machine::removeFood() {
   std::string input = Helper::readInput();
-  Node *meal = this->data->meals->getById(input);
 
-  if (meal) {
-    std::cout << "\"" << meal->data->id << " - " << meal->data->name << " - "
-              << meal->data->description << "\""
-              << "has been removed from the system" << "\n";
-    this->data->meals->remove(input);
+  if (input.empty()) {
+    std::cout << "Cancel delete" << "\n";
+  } else {
+
+    Node *meal = this->data->meals->getById(input);
+
+    if (meal) {
+      std::cout << "\"" << meal->data->id << " - " << meal->data->name << " - "
+                << meal->data->description << "\""
+                << "has been removed from the system" << "\n";
+      this->data->meals->remove(input);
+    }
   }
 }
 
