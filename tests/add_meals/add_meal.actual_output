@@ -7,16 +7,15 @@ Administrator-Only Menu:
         5. Remove Food
         6. Display Balance
         7. Abort Program
-Select your option (1-7) : 4
-
+Select your option (1-7) : 
 This new meal item will have the Item ID of F0009.
-Enter the item name: Fried Chicken
-Enter the item description: Fresh Crispy Fried Chicken from Kentucky
-Enter the price for this item (in cents): 12.5
+Enter the item name: 
+Enter the item description: 
+Enter the price for this item (in cents):
 Invalid price
-Enter the price for this item (in cents): 12500
+Enter the price for this item (in cents):
 Invalid price
-Enter the price for this item (in cents): 1250
+Enter the price for this item (in cents): 
 Invalid price
-Enter the price for this item (in cents): 12.50 
+Enter the price for this item (in cents): 
 This item "Fried Chicken - Fresh Crispy Fried Chicken from Kentucky"has now been added to the food menu
