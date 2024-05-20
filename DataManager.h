@@ -20,10 +20,6 @@
 
 class DataManager {
 private:
-  // Hold the name of the files so we can save it
-  std::string mealFile;
-  std::string moneyFile;
-
 public:
   /*
    * Read the money data file and meal data file into meals and balance
@@ -31,6 +27,10 @@ public:
    */
   LinkedList *meals;
   Balance *balance;
+  // Hold the name of the files so we can save it
+  std::string mealFile;
+  std::string moneyFile;
+
   DataManager(std::string mealFileName, std::string moneyFileName);
   ~DataManager();
 
