@@ -1,0 +1,23 @@
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+Please enter the ID of the food to remove from the menu: "F0001 - Baklava - Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey"has been removed from the system
+
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+Abort

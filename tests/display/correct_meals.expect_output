@@ -1,0 +1,31 @@
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+ID   |Name                                    |Length
+-------------------------------------------------------
+F0001|Baklava                                 |$ 8.50
+F0005|Bibimbab                                |$15.80
+F0006|Fondue                                  |$31.50
+F0002|Gnocchi                                 |$12.50
+F0003|Haggis                                  |$18.70
+F0004|Jambalaya                               |$23.00
+F0007|Kelewele                                |$11.50
+
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+Abort
