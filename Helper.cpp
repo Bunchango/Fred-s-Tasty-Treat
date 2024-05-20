@@ -70,7 +70,7 @@ int Helper::getLongestIntegerPart(std::vector<float> numbers) {
     std::string numStr = floatToString(num, 2);
     Helper::splitString(numStr, splitted, ".");
 
-    if (splitted[0].size() > longestInteger) {
+    if ((int)splitted[0].size() > longestInteger) {
       longestInteger = splitted[0].size();
     }
   }
@@ -83,8 +83,8 @@ std::string Helper::formatFloatToString(float number, int longestIntegerPart) {
   std::vector<std::string> splitNumber = {};
   splitString(floatToString(number, 2), splitNumber, ".");
 
-  if (splitNumber[0].size() < longestIntegerPart) {
-    for (int i = 0; i < longestIntegerPart - splitNumber[0].size(); i++) {
+  if ((int)splitNumber[0].size() < longestIntegerPart) {
+    for (int i = 0; i < longestIntegerPart - (int)splitNumber[0].size(); i++) {
       result.append(" ");
     }
   }

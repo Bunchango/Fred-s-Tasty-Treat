@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     machine->start();
     delete machine;
   } else {
-    Helper::printInvalidInput();
+    std::cout << "Invalid arguments" << "\n";
   }
 
   return EXIT_SUCCESS;
