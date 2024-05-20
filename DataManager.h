@@ -7,12 +7,15 @@
 
 #define EMPTY_SPACE " "
 #define SEPARATOR "|"
+// Representing the number of separators to display the meals and balance
 #define SEPARATOR_NUM 2
 #define MONEY_SYMBOL "$"
 #define DENOM_LENGTH 7
+// The extra padding of LINEs
 #define EXCESS_LINE 4
 #define LINE "-"
 #define DEFAULT_QUANTITY_LENGTH 9
+// This is for dynamically printing out the values of balance
 #define DEFAULT_VALUE_LENGTH 6
 
 class DataManager {
@@ -33,7 +36,6 @@ public:
 
   /*
    * Save all data to data files
-   * Return true if successfully saved data, false if otherwise
    */
   void save();
 };
