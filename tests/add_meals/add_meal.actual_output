@@ -1,0 +1,27 @@
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+This new meal item will have the Item ID of F0009.
+Enter the item name: Enter the item description: Enter the price for this item (in cents): Invalid price
+Enter the price for this item (in cents): Invalid price
+Enter the price for this item (in cents): Invalid price
+Enter the price for this item (in cents): This item "Fried Chicken - Fresh Crispy Fried Chicken from Kentucky"has now been added to the food menu
+
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+
