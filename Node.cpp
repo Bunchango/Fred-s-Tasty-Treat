@@ -18,7 +18,7 @@ bool Price::isValidPrice(std::string price) {
   std::regex pattern(".*[05]$");
   if (tokens.size() == 2 && Helper::isNumber(price) && tokens[1].size() == 2 &&
       std::regex_match(tokens[1], pattern) && Helper::isValidFloat(price) &&
-      std::stof(price) <= 100) {
+      std::stof(price) <= 100 && std::stof(price) > 0) {
     result = true;
   }
   return result;
