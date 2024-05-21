@@ -1,0 +1,36 @@
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+Denom  | Quantity | Value 
+----------------------------
+5      | 20       |$   1.00
+10     | 0        |$   0.00
+20     | 3        |$   0.60
+50     | 5        |$   2.50
+100    | 30       |$  30.00
+200    | 20       |$  40.00
+500    | 6        |$  30.00
+1000   | 10       |$ 100.00
+2000   | 10       |$ 200.00
+5000   | 10       |$ 500.00
+----------------------------
+                   $ 904.10
+
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) : 
+
