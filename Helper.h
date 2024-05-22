@@ -37,5 +37,7 @@ public:
   static bool isValidInteger(std::string s);
 
   static bool isValidFloat(std::string s);
+
+  static void sortIntVector(std::vector<int> &v);
 };
 #endif

@@ -110,7 +110,8 @@ void Machine::purchaseMeal() {
   // Buying phase
   // Store all coins paid by the customer so we can delete they later if the
   // customer decides to exit
-  std::vector<Coin> payings = {};
+  std::vector<int> payings = {};
+  std::vector<int> changes = {};
   // A bool representing that user fully paid for the item
   bool reachedToRegister = false;
 
@@ -129,10 +130,19 @@ void Machine::purchaseMeal() {
       std::cin.clear(); // Clear the error flags
 
       // When exit, remove the coins from the system
-      for (Coin newCoin : payings) {
+      // Sort the payings first
+      Helper::sortIntVector(payings);
+      std::cout << "Refund: ";
+      for (int newCoin : payings) {
         for (Coin &coin : this->data->balance->balance) {
-          if (coin.denom == newCoin.denom) {
-            coin.count -= newCoin.count;
+          if (coin.denom == newCoin) {
+            coin.count -= 1;
+            // Print out the refund
+            if (coin.denom < 100) {
+              std::cout << coin.denom << "c ";
+            } else {
+              std::cout << "$" << coin.denom / 100 << " ";
+            }
           }
         }
       }
@@ -148,7 +158,7 @@ void Machine::purchaseMeal() {
       newCoin.denom = Coin::intToDenomination(std::stoi(input));
       // Keep track of newly added coins so that when user cancle purchase, we
       // can remove them
-      payings.push_back(newCoin);
+      payings.push_back(newCoin.denom);
       this->data->balance->insert(newCoin);
 
       // Check if the register can afford to pay for the change
@@ -167,8 +177,8 @@ void Machine::purchaseMeal() {
       if (!canReturnChange) {
         // Force the user to pay for the item again and remove the previous
         // paid Coin from the system
-        priceAsCents += payings.back().denom;
-        this->data->balance->getDenom(payings.back().denom)->count--;
+        priceAsCents += payings.back();
+        this->data->balance->getDenom(payings.back())->count--;
 
         std::cout << "The register doesn't have enough coins for change. "
                      "Please try a different denom"
@@ -188,17 +198,11 @@ void Machine::purchaseMeal() {
       Coin *maxCoinPtr =
           this->data->balance->getMaxDenomForValue(-priceAsCents);
 
-      // Decrement the coin count
+      // Decrement the coin count and get change
       if (maxCoinPtr) {
         maxCoinPtr->count--;
         priceAsCents += maxCoinPtr->denom;
-      }
-
-      // Print the denomination
-      if (maxCoinPtr && maxCoinPtr->denom < 100) {
-        std::cout << maxCoinPtr->denom << "c ";
-      } else if (maxCoinPtr && maxCoinPtr->denom >= 100) {
-        std::cout << "$" << maxCoinPtr->denom / 100 << " ";
+        changes.push_back(maxCoinPtr->denom);
       }
     }
 
@@ -207,10 +211,22 @@ void Machine::purchaseMeal() {
       run = false;
     }
   }
-  // If reached to the end, remove the number of item by 1
+  // If reached to the end, remove the number of item by 1 and output the
+  // changes
   if (reachedToRegister) {
     // Decrement the amount
     meal->data->on_hand--;
+    // Sort the changes first
+    Helper::sortIntVector(changes);
+
+    for (int change : changes) {
+      // Print the denomination
+      if (change < 100) {
+        std::cout << change << "c ";
+      } else {
+        std::cout << "$" << change / 100 << " ";
+      }
+    }
   }
 }
 
