@@ -67,6 +67,7 @@ void LinkedList::remove(std::string id) {
     }
 
     delete current;
+    this->count--;
   }
 }
 
