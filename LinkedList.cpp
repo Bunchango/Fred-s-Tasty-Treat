@@ -124,16 +124,18 @@ void LinkedList::sortByAlpha() {
 
   do {
     swapped = false;
+    // Start from the head of the list
     ptr1 = head;
 
+    // Traverse until the end of the unsorted portion
     while (ptr1->next != last) {
       if (ptr1->data->name > ptr1->next->data->name) {
-        // Swap the data of ptr1 and ptr1->next
+        // Swap the data of ptr1 and ptr1->next if they are in the wrong order
         std::swap(ptr1->data, ptr1->next->data);
         swapped = true;
       }
-      ptr1 = ptr1->next;
+      ptr1 = ptr1->next; // Move to the next one
     }
-    last = ptr1;
-  } while (swapped);
+    last = ptr1; // Update the end of the sorted portion
+  } while (swapped); // Repeat until no swaps are made
 }

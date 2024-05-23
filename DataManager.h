@@ -18,6 +18,11 @@
 // This is for dynamically printing out the values of balance
 #define DEFAULT_VALUE_LENGTH 6
 
+// The DataManager is for managing all data within the system
+// It will attempt to read the data from meal and coins files
+// If not successful, it will create default data for the Machine
+// And it is also responsible for saving the data into the files used to create
+// it
 class DataManager {
 private:
 public:

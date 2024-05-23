@@ -87,8 +87,14 @@ public:
    */
   std::string static constructID(int id);
 
+  /*
+   * Check if a string is in correct format of name
+   */
   bool static isValidName(const std::string &name);
 
+  /*
+   * Check if a string is in correct format of description
+   */
   bool static isValidDesc(const std::string &desc);
 };
 

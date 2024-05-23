@@ -5,6 +5,7 @@
 #include "LinkedList.h"
 #include <string>
 
+// This class defines the interface and commands of ftt
 class Machine {
 private:
   // A pointer to an object to handle reading / saving / containing data

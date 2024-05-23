@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 
+// This class defines utility functions for the project,
+// acknowledgements to Helper.h from Assignment 1
+
 class Helper {
 private:
   Helper();
@@ -32,12 +35,12 @@ public:
   static int getLongestIntegerPart(std::vector<float> numbers);
 
   // Check if a string can be converted to an integer
-  // For now, we don't accept a number that is too large because that can result
-  // in inaccurate numbers
   static bool isValidInteger(std::string s);
 
+  // Check if a string can be converted to a float
   static bool isValidFloat(std::string s);
 
+  // Sort a vector of integer
   static void sortIntVector(std::vector<int> &v);
 };
 #endif

@@ -2,8 +2,9 @@
 #define BALANCE_H
 #include "Coin.h"
 #include "Node.h"
-
 #include <vector>
+
+// This class is responsible for managing all Coins within the system
 class Balance {
 public:
   // We only need a fixed size array of Coin as balance won't change size during

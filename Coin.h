@@ -37,6 +37,7 @@ public:
 
   /*
    * Return a Denomination enum corresponding to an int
+   * This function assumes the value is a valid denomination
    */
   Denomination static intToDenomination(int denomination_val);
 
