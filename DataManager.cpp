@@ -11,7 +11,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   // Create an empty LinkedList and balance
   this->meals = new LinkedList();
   this->balance = new Balance();
-  
+
   this->mealFile = mealFileName;
   this->moneyFile = moneyFileName;
 
@@ -31,7 +31,7 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
 
     if (tokens.size() == 4 && tokens[1].size() <= NAMELEN &&
         tokens[2].size() <= DESCLEN && FoodItem::isValidIdFormat(tokens[0]) &&
-        Price::isValidPrice(tokens[3])) {
+        Price::isValidPrice(tokens[3]) && !this->meals->getById(tokens[0])) {
       // Slit the price into its integer and fractional part to create Price
       // object
       Helper::splitString(Helper::floatToString(std::stof(tokens[3]), 2),
@@ -71,29 +71,29 @@ DataManager::DataManager(std::string mealFileName, std::string moneyFileName) {
   mealFile.close();
   moneyFile.close();
 }
-// Save the file 
+// Save the file
 void DataManager::save() {
   std::ofstream mealFile(this->mealFile);
   std::ofstream coinFile(this->moneyFile);
 
   if (!mealFile.is_open()) {
-      std::cerr << "Failed to open file: " << this->mealFile << std::endl;
-      return;
+    std::cerr << "Failed to open file: " << this->mealFile << std::endl;
+    return;
   }
 
   std::string line;
-  Node* current = this->meals->getFirst();
+  Node *current = this->meals->getFirst();
   while (current) {
-    mealFile << current->data->id << SEPARATOR << current->data->name 
-    << "|" << current->data->description << SEPARATOR 
-    << Helper::floatToString(current->data->price.value(), 2) << "\n";
+    mealFile << current->data->id << SEPARATOR << current->data->name << "|"
+             << current->data->description << SEPARATOR
+             << Helper::floatToString(current->data->price.value(), 2) << "\n";
 
     current = current->next;
   }
 
-  for (Coin coin: this->balance->balance) {
+  for (Coin coin : this->balance->balance) {
     coinFile << coin.denom << DELIM << coin.count << "\n";
-  } 
+  }
 
   mealFile.close();
   coinFile.close();
