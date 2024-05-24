@@ -278,10 +278,12 @@ void Machine::displayMeals() {
 
 void Machine::displayBalance() {
   // Get maximum quantity and value length
-  int quantlen =
-      Helper::floatToString(this->data->balance->getMaxValue(), 0).size();
-  int valuelen =
-      Helper::floatToString(this->data->balance->getMaxValue(), 2).size();
+  int quantlen = Helper::floatToString(this->data->balance->getMaxValue(),
+                                       ZERO_DECIMAL_PLACE)
+                     .size();
+  int valuelen = Helper::floatToString(this->data->balance->getMaxValue(),
+                                       TWO_DECIMAL_PLACE)
+                     .size();
 
   if (quantlen < DEFAULT_QUANTITY_LENGTH) {
     quantlen = DEFAULT_QUANTITY_LENGTH;
@@ -327,12 +329,14 @@ void Machine::displayBalance() {
     }
     std::cout << SEPARATOR << MONEY_SYMBOL << EMPTY_SPACE;
 
-    for (int i = 0;
-         i < valuelen - (int)Helper::floatToString(coin.getTotal(), 2).size();
+    for (int i = 0; i < valuelen - (int)Helper::floatToString(coin.getTotal(),
+                                                              TWO_DECIMAL_PLACE)
+                                       .size();
          i++) {
       std::cout << EMPTY_SPACE;
     }
-    std::cout << Helper::floatToString(coin.getTotal(), 2) << "\n";
+    std::cout << Helper::floatToString(coin.getTotal(), TWO_DECIMAL_PLACE)
+              << "\n";
   }
 
   // Display separator line
@@ -351,11 +355,13 @@ void Machine::displayBalance() {
   std::cout << MONEY_SYMBOL << EMPTY_SPACE;
 
   float total = this->data->balance->getTotalValue();
-  for (int i = 0; i < valuelen - (int)Helper::floatToString(total, 2).size();
+  for (int i = 0;
+       i <
+       valuelen - (int)Helper::floatToString(total, TWO_DECIMAL_PLACE).size();
        i++) {
     std::cout << EMPTY_SPACE;
   }
-  std::cout << Helper::floatToString(total, 2) << "\n";
+  std::cout << Helper::floatToString(total, TWO_DECIMAL_PLACE) << "\n";
 }
 
 void Machine::addFood() {

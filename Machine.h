@@ -5,6 +5,9 @@
 #include "LinkedList.h"
 #include <string>
 
+#define TWO_DECIMAL_PLACE 2
+#define ZERO_DECIMAL_PLACE 0
+
 // This class defines the interface and commands of ftt
 class Machine {
 private:
