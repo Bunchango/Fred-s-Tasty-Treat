@@ -22,6 +22,6 @@ int main(int argc, char **argv) {
   } else {
     std::cout << "Invalid arguments" << "\n";
   }
-
+  
   return EXIT_SUCCESS;
 }
